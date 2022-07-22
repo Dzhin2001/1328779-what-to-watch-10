@@ -19,44 +19,44 @@ type AppScreenProps = {
 
 function App({filmDetails}:AppScreenProps ): JSX.Element {
   return (
-  <BrowserRouter>
-    <Routes>
-      <Route
-        path={AppRoute.Main}
-        element={<Main filmDetails={filmDetails} />}
-      />
-      <Route
-        path={AppRoute.SignIn}
-        element={<SignIn />}
-      />
-      <Route
-        path={AppRoute.MyList}
-        element={
-          <PrivateRoute
-            authorizationStatus={AuthorizationStatus.NoAuth}
-          >
-            <MyList />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path={AppRoute.Film}
-        element={<MoviePage />}
-      />
-      <Route
-        path={AppRoute.AddReview}
-        element={<AddReview />}
-      />
-      <Route
-        path={AppRoute.Player}
-        element={<Player />}
-      />
-      <Route
-        path="*"
-        element={<NotFoundScreen />}
-      />
-    </Routes>
-  </BrowserRouter>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path={AppRoute.Main}
+          element={<Main filmDetails={filmDetails} />}
+        />
+        <Route
+          path={AppRoute.SignIn}
+          element={<SignIn />}
+        />
+        <Route
+          path={AppRoute.MyList}
+          element={
+            <PrivateRoute
+              authorizationStatus={AuthorizationStatus.NoAuth}
+            >
+              <MyList />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={AppRoute.Film}
+          element={<MoviePage />}
+        />
+        <Route
+          path={AppRoute.AddReview}
+          element={<AddReview />}
+        />
+        <Route
+          path={AppRoute.Player}
+          element={<Player />}
+        />
+        <Route
+          path="*"
+          element={<NotFoundScreen />}
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
