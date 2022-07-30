@@ -1,7 +1,9 @@
-
-import FilmCard from '../../components/film-card/film-card';
+import {Films} from '../../types/films';
+import FilmList from '../../components/film-list/film-list';
+import Logo from '../../components/logo/logo';
 
 type MainScreenProps = {
+  films: Films,
   filmDetails: {
     name: string,
     genre: string,
@@ -9,7 +11,7 @@ type MainScreenProps = {
   }
 };
 
-function Main({filmDetails}:MainScreenProps): JSX.Element {
+function Main({films, filmDetails}: MainScreenProps): JSX.Element {
   return (
     <>
       <section className="film-card">
@@ -20,13 +22,7 @@ function Main({filmDetails}:MainScreenProps): JSX.Element {
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header film-card__head">
-          <div className="logo">
-            <a className="logo__link">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
+          <Logo />
 
           <ul className="user-block">
             <li className="user-block__item">
@@ -110,28 +106,11 @@ function Main({filmDetails}:MainScreenProps): JSX.Element {
             </li>
           </ul>
 
-          <div className="catalog__films-list">
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-          </div>
+
+          <FilmList
+            films={films}
+          />
+
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>

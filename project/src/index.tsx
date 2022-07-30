@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
+import {films} from './mocks/films';
+import {reviews} from './mocks/reviews';
 
 const FilmDetails = {
   name: 'The Grand Gorki Gorod Hotel',
@@ -14,6 +16,10 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App filmDetails={FilmDetails}/>
+    <App
+      films={films}
+      reviews={reviews}
+      filmDetails={FilmDetails}
+    />
   </React.StrictMode>,
 );
