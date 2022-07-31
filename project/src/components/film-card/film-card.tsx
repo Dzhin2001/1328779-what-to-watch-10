@@ -1,10 +1,10 @@
 import {Film} from '../../types/films';
-import {useState} from 'react';
 import {Link} from 'react-router-dom';
+import {Dispatch} from 'react';
 
 type FilmCardProps = {
   film: Film,
-  setActiveCard: Function,
+  setActiveCard: Dispatch<number>,
 };
 
 function FilmCard({film, setActiveCard}: FilmCardProps): JSX.Element {
