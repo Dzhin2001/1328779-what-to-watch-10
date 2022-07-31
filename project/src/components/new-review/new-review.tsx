@@ -9,8 +9,8 @@ function NewReview(): JSX.Element {
   };
   const [newReview, setNewReview] = useState(
     {
-      rating:'8',
-      'review-text':'',
+      rating: '8',
+      reviewText: '',
     });
   return (
     <div className="add-review">
@@ -51,8 +51,8 @@ function NewReview(): JSX.Element {
 
         <div className="add-review__text">
           <textarea
-            className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text"
-            onChange={reviewChangeHandle} value={newReview['review-text']}
+            className="add-review__textarea" name="reviewText" id="reviewText" placeholder="Review text"
+            onChange={reviewChangeHandle} value={newReview.reviewText}
           >
           </textarea>
           <div className="add-review__submit">

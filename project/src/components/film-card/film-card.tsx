@@ -8,7 +8,7 @@ type FilmCardProps = {
 
 function FilmCard({film}: FilmCardProps): JSX.Element {
   const id = film.id.toString();
-  const setActive = useState(false)[1];
+  const [,setActive] = useState(false);
   return (
     <article className="small-film-card catalog__films-card"
       onMouseEnter ={(e) => {
