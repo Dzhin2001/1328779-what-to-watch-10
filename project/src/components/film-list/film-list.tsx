@@ -7,7 +7,8 @@ type FilmListProps = {
 };
 
 function FilmList({films}: FilmListProps): JSX.Element {
-  const [,setActiveCard] = useState(0);
+  const [ , setActiveCard] = useState(-1);
+
   return (
     <div className="catalog__films-list">
       {
