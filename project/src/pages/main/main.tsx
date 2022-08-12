@@ -1,4 +1,3 @@
-import {Films} from '../../types/films';
 import FilmList from '../../components/film-list/film-list';
 import GenreList from '../../components/genre-list/genre-list';
 import Logo from '../../components/logo/logo';

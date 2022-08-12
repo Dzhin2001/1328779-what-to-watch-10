@@ -19,7 +19,7 @@ const reducer = createReducer(initialState, (builder) => {
       }
       state.filteredFilms = films;
       if (state.actualGenre !== 'All genres') {
-        state.filteredFilms = films.filter((e) => e.genre === state.actualGenre)
+        state.filteredFilms = films.filter((e) => e.genre === state.actualGenre);
       }
       state.genre = state.actualGenre;
     })

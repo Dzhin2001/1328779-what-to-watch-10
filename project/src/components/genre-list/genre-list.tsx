@@ -10,10 +10,10 @@ function GenreList(): JSX.Element {
       {genres.map((genre) => (
         <li key={genre} className={`catalog__genres-item ${genre === actualGenre ? 'catalog__genres-item--active' : ''}`}>
           <Link to="/" className="catalog__genres-link"
-             onClick={() => {
-               dispatch(changeGenre(genre));
-               dispatch(filterFilms());
-             }}
+            onClick={() => {
+              dispatch(changeGenre(genre));
+              dispatch(filterFilms());
+            }}
           >
             {genre}
           </Link>
