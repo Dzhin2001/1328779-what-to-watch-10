@@ -1,6 +1,7 @@
 export type Films = Film[];
 export type Actors = string[];
 export type Rating = number;
+export type Genre = string;
 export type Film =
   {
     id: number,
@@ -17,7 +18,7 @@ export type Film =
     director: string,
     starring: Actors,
     runTime: number,
-    genre: string,
+    genre: Genre,
     released: number,
     isFavorite: boolean,
   };

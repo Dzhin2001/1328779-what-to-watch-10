@@ -1,3 +1,5 @@
+import {Genre} from './types/films';
+
 export enum AppRoute {
   Main = '/',
   SignIn = '/login',
@@ -12,3 +14,5 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+
+export const DEFAULT_GENRE: Genre = 'All genres';
