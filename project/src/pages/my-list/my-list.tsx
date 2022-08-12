@@ -1,6 +1,7 @@
 import {Films} from '../../types/films';
 import Logo from '../../components/logo/logo';
 import FilmList from '../../components/film-list/film-list';
+import {DEFAULT_LIKED_FILM_COUNT} from '../../const';
 
 type MyListProps = {
   films: Films,
@@ -30,6 +31,7 @@ function MyList({films}: MyListProps): JSX.Element {
 
         <FilmList
           films={films}
+          filmsCount={DEFAULT_LIKED_FILM_COUNT}
         />
       </section>
 

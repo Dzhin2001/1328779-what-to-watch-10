@@ -53,7 +53,6 @@ function App({films, reviews, filmDetails}:AppScreenProps ): JSX.Element {
           path={AppRoute.Film}
           element={
             <MoviePage
-              films={films}
               reviews={reviews}
             />
           }

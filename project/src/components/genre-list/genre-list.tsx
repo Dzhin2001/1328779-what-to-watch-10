@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {changeGenre, filterFilms} from '../../store/action';
+import {changeGenre, filterFilms, initFilmsCount} from '../../store/action';
 
 function GenreList(): JSX.Element {
   const {actualGenre, genres} = useAppSelector((state) => state);
@@ -13,6 +13,7 @@ function GenreList(): JSX.Element {
             onClick={() => {
               dispatch(changeGenre(genre));
               dispatch(filterFilms());
+              dispatch(initFilmsCount());
             }}
           >
             {genre}

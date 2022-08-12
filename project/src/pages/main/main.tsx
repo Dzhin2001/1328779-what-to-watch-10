@@ -1,7 +1,8 @@
 import FilmList from '../../components/film-list/film-list';
 import GenreList from '../../components/genre-list/genre-list';
 import Logo from '../../components/logo/logo';
-import {useAppSelector} from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {initFilmsCount, incFilmsCount} from "../../store/action";
 
 type MainScreenProps = {
   filmDetails: {
@@ -13,7 +14,8 @@ type MainScreenProps = {
 
 function Main({filmDetails}: MainScreenProps): JSX.Element {
 
-  const films = useAppSelector((state) => state.filteredFilms);
+  const dispatch = useAppDispatch();
+  const {filteredFilms, filmCount} = useAppSelector((state) => state);
 
   return (
     <>
@@ -80,13 +82,19 @@ function Main({filmDetails}: MainScreenProps): JSX.Element {
 
 
           <FilmList
-            films={films}
+            films={filteredFilms}
+            filmsCount={filmCount}
           />
 
 
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+
+          {filmCount < filteredFilms.length &&
+            <div className="catalog__more">
+              <button className="catalog__button" type="button"
+                onClick={() => dispatch(incFilmsCount())}
+              >Show more</button>
+            </div>
+          }
         </section>
 
         <footer className="page-footer">

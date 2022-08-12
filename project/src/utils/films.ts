@@ -10,4 +10,8 @@ const getGenres = (films: Films) => (
   )
 );
 
-export {getGenres};
+const getSimilarFilms = (films: Films, sampleFilm: Film) => (
+  films.filter((e) => e.genre === sampleFilm.genre)
+);
+
+export {getGenres, getSimilarFilms};
