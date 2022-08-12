@@ -17,7 +17,7 @@ enum AuthorizationStatus {
 
 const DEFAULT_GENRE: Genre = 'All genres';
 
-const DEFAULT_FILM_COUNT: number = 8;
-const DEFAULT_LIKED_FILM_COUNT: number = 4;
+const DEFAULT_FILM_COUNT = 8;
+const DEFAULT_LIKED_FILM_COUNT = 4;
 
 export {AppRoute, AuthorizationStatus, DEFAULT_GENRE, DEFAULT_FILM_COUNT, DEFAULT_LIKED_FILM_COUNT};

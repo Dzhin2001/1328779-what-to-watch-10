@@ -2,7 +2,7 @@ import FilmList from '../../components/film-list/film-list';
 import GenreList from '../../components/genre-list/genre-list';
 import Logo from '../../components/logo/logo';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {initFilmsCount, incFilmsCount} from "../../store/action";
+import {incFilmsCount} from '../../store/action';
 
 type MainScreenProps = {
   filmDetails: {
@@ -80,19 +80,18 @@ function Main({filmDetails}: MainScreenProps): JSX.Element {
 
           <GenreList />
 
-
           <FilmList
             films={filteredFilms}
             filmsCount={filmCount}
           />
 
-
-
-          {filmCount < filteredFilms.length &&
+          {
+            filmCount < filteredFilms.length &&
             <div className="catalog__more">
               <button className="catalog__button" type="button"
                 onClick={() => dispatch(incFilmsCount())}
-              >Show more</button>
+              >Show more
+              </button>
             </div>
           }
         </section>

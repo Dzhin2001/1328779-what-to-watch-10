@@ -34,7 +34,7 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(incFilmsCount, (state) => {
       const countFilms = state.filteredFilms.length;
-      state.filmCount = state.filmCount+DEFAULT_FILM_COUNT < countFilms ? state.filmCount+DEFAULT_FILM_COUNT : countFilms;
+      state.filmCount = state.filmCount + DEFAULT_FILM_COUNT < countFilms ? state.filmCount + DEFAULT_FILM_COUNT : countFilms;
     });
 });
 
