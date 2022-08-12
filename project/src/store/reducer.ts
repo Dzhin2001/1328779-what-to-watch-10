@@ -1,5 +1,5 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {changeGenre, initFilms} from './action';
+import {changeGenre, filterFilms} from './action';
 import {films} from '../mocks/films';
 import {DEFAULT_GENRE} from '../const';
 import {getGenres} from '../utils/films';
@@ -13,15 +13,15 @@ const initialState = {
 
 const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(initFilms, (state) => {
+    .addCase(filterFilms, (state) => {
       if (state.genre === state.actualGenre) {
         return;
       }
-      state.genre = state.actualGenre;
       state.filteredFilms = films;
-      if (state.genre !== 'All genres') {
-        state.filteredFilms = films.filter((e) => e.genre === state.genre)
+      if (state.actualGenre !== 'All genres') {
+        state.filteredFilms = films.filter((e) => e.genre === state.actualGenre)
       }
+      state.genre = state.actualGenre;
     })
     .addCase(changeGenre, (state, action) => {
       state.actualGenre = action.payload;

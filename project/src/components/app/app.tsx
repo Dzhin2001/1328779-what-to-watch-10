@@ -29,7 +29,6 @@ function App({films, reviews, filmDetails}:AppScreenProps ): JSX.Element {
           path={AppRoute.Main}
           element={
             <Main
-              films={films}
               filmDetails={filmDetails}
             />
           }

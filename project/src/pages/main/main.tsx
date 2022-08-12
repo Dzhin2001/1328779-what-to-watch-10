@@ -2,11 +2,9 @@ import {Films} from '../../types/films';
 import FilmList from '../../components/film-list/film-list';
 import GenreList from '../../components/genre-list/genre-list';
 import Logo from '../../components/logo/logo';
-import {DEFAULT_GENRE} from '../../const';
 import {useAppSelector} from '../../hooks';
 
 type MainScreenProps = {
-  films: Films,
   filmDetails: {
     name: string,
     genre: string,
@@ -14,9 +12,9 @@ type MainScreenProps = {
   }
 };
 
-function Main({films, filmDetails}: MainScreenProps): JSX.Element {
+function Main({filmDetails}: MainScreenProps): JSX.Element {
 
-  const {} = useAppSelector((state) => state.genre);
+  const films = useAppSelector((state) => state.filteredFilms);
 
   return (
     <>

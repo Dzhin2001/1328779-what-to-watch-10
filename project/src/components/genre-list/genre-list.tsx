@@ -1,7 +1,6 @@
-
 import {Link} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {changeGenre} from '../../store/action';
+import {changeGenre, filterFilms} from '../../store/action';
 
 function GenreList(): JSX.Element {
   const {actualGenre, genres} = useAppSelector((state) => state);
@@ -11,7 +10,10 @@ function GenreList(): JSX.Element {
       {genres.map((genre) => (
         <li key={genre} className={`catalog__genres-item ${genre === actualGenre ? 'catalog__genres-item--active' : ''}`}>
           <Link to="/" className="catalog__genres-link"
-             onClick={() => dispatch(changeGenre(genre))}
+             onClick={() => {
+               dispatch(changeGenre(genre));
+               dispatch(filterFilms());
+             }}
           >
             {genre}
           </Link>
