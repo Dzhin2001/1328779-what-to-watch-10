@@ -29,7 +29,6 @@ function App({films, reviews, filmDetails}:AppScreenProps ): JSX.Element {
           path={AppRoute.Main}
           element={
             <Main
-              films={films}
               filmDetails={filmDetails}
             />
           }
@@ -54,7 +53,6 @@ function App({films, reviews, filmDetails}:AppScreenProps ): JSX.Element {
           path={AppRoute.Film}
           element={
             <MoviePage
-              films={films}
               reviews={reviews}
             />
           }

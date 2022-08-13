@@ -1,20 +1,21 @@
-import { Films, Film } from '../../types/films';
 import {Reviews} from '../../types/reviews';
 import { useParams } from 'react-router-dom';
 import NotFoundScreen from '../../components/error-404/not-found-screen';
 import Logo from '../../components/logo/logo';
 import FilmTabs from '../../components/film-tabs/film-tabs';
 import FilmList from '../../components/film-list/film-list';
+import {getSimilarFilms} from '../../utils/films';
+import {DEFAULT_LIKED_FILM_COUNT} from '../../const';
+import {useAppSelector} from '../../hooks';
 
 type MoviePageProps = {
-  films: Films,
   reviews: Reviews,
 };
 
-function MoviePage({films, reviews}: MoviePageProps): JSX.Element {
+function MoviePage({reviews}: MoviePageProps): JSX.Element {
+  const {initialFilms} = useAppSelector((state) => state);
   const { id } = useParams();
-  const film = films.find((element) => element.id.toString() === id);
-  const getSimilarFilms = (sampleFilm: Film) => (films.filter((e) => e.genre === sampleFilm.genre).slice(0,4));
+  const film = initialFilms.find((element) => element.id.toString() === id);
   if (film) {
     return (
       <>
@@ -89,7 +90,8 @@ function MoviePage({films, reviews}: MoviePageProps): JSX.Element {
             <h2 className="catalog__title">More like this</h2>
 
             <FilmList
-              films={ getSimilarFilms(film) }
+              films={ getSimilarFilms(initialFilms, film) }
+              filmsCount={DEFAULT_LIKED_FILM_COUNT}
             />
 
           </section>
