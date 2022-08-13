@@ -1,8 +1,9 @@
 import FilmList from '../../components/film-list/film-list';
 import GenreList from '../../components/genre-list/genre-list';
 import Logo from '../../components/logo/logo';
-import {useAppDispatch, useAppSelector} from '../../hooks';
-import {incFilmsCount} from '../../store/action';
+import {useAppSelector} from '../../hooks';
+import {useState} from 'react';
+import {DEFAULT_FILM_COUNT} from '../../const';
 
 type MainScreenProps = {
   filmDetails: {
@@ -13,9 +14,12 @@ type MainScreenProps = {
 };
 
 function Main({filmDetails}: MainScreenProps): JSX.Element {
-
-  const dispatch = useAppDispatch();
-  const {filteredFilms, filmCount} = useAppSelector((state) => state);
+  const getFilmsCount = (newCount: number) => (newCount < filteredFilms.length ? newCount : filteredFilms.length);
+  const filteredFilms = useAppSelector((state) => state.filteredFilms);
+  const [filmsCount, setFilmsCount] = useState(getFilmsCount( DEFAULT_FILM_COUNT ));
+  const showMoreBtnClickHandle = () => {
+    setFilmsCount(getFilmsCount(filmsCount + DEFAULT_FILM_COUNT ));
+  };
 
   return (
     <>
@@ -82,16 +86,13 @@ function Main({filmDetails}: MainScreenProps): JSX.Element {
 
           <FilmList
             films={filteredFilms}
-            filmsCount={filmCount}
+            filmsCount={filmsCount}
           />
 
           {
-            filmCount < filteredFilms.length &&
+            filmsCount < filteredFilms.length &&
             <div className="catalog__more">
-              <button className="catalog__button" type="button"
-                onClick={() => dispatch(incFilmsCount())}
-              >Show more
-              </button>
+              <button className="catalog__button" type="button" onClick={showMoreBtnClickHandle}>Show more</button>
             </div>
           }
         </section>
