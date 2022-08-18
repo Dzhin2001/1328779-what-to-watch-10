@@ -1,53 +1,46 @@
-import {Films} from '../../types/films';
 import Logo from '../../components/logo/logo';
 import FilmList from '../../components/film-list/film-list';
+import UserBlock from '../../components/user-block/user-block';
+import Footer from '../../components/footer/footer';
 import {DEFAULT_LIKED_FILM_COUNT} from '../../const';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {useParams} from 'react-router-dom';
+import {useEffect} from 'react';
+import {fetchFavoriteFilmsAction} from '../../store/api-actions';
 
-type MyListProps = {
-  films: Films,
-};
 
-function MyList({films}: MyListProps): JSX.Element {
+function MyList(): JSX.Element {
+  const favoriteFilms = useAppSelector((state) => state.favoriteFilms);
+  const { id } = useParams();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchFavoriteFilmsAction());
+    }
+  }, [id]);
+
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
         <Logo />
 
-        <h1 className="page-title user-page__title">My list <span className="user-page__film-count">9</span></h1>
-        <ul className="user-block">
-          <li className="user-block__item">
-            <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-            </div>
-          </li>
-          <li className="user-block__item">
-            <a className="user-block__link">Sign out</a>
-          </li>
-        </ul>
+        <h1 className="page-title user-page__title">My list <span className="user-page__film-count">{favoriteFilms.length}</span></h1>
+
+        <UserBlock />
       </header>
 
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <FilmList
-          films={films}
+          films={favoriteFilms}
           filmsCount={DEFAULT_LIKED_FILM_COUNT}
         />
       </section>
 
-      <footer className="page-footer">
-        <div className="logo">
-          <a href="main.html" className="logo__link logo__link--light">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </a>
-        </div>
+      <Footer />
 
-        <div className="copyright">
-          <p>© 2019 What to watch Ltd.</p>
-        </div>
-      </footer>
     </div>
   );
 }

@@ -1,5 +1,14 @@
 import {Genre} from './types/films';
 
+enum APIRoute {
+  Films = '/films',
+  Promo = '/promo',
+  Favorite = '/favorite',
+  Comments = '/comments',
+  Login = '/login',
+  Logout = '/logout',
+}
+
 enum AppRoute {
   Main = '/',
   SignIn = '/login',
@@ -19,5 +28,6 @@ const DEFAULT_GENRE: Genre = 'All genres';
 
 const DEFAULT_FILM_COUNT = 8;
 const DEFAULT_LIKED_FILM_COUNT = 4;
+const TIMEOUT_SHOW_ERROR = 2000;
 
-export {AppRoute, AuthorizationStatus, DEFAULT_GENRE, DEFAULT_FILM_COUNT, DEFAULT_LIKED_FILM_COUNT};
+export {APIRoute, AppRoute, AuthorizationStatus, DEFAULT_GENRE, DEFAULT_FILM_COUNT, DEFAULT_LIKED_FILM_COUNT, TIMEOUT_SHOW_ERROR};

@@ -8,7 +8,7 @@ export type User = {
 
 export type Review ={
     comment: Comment,
-    date: Date,
+    date: string,
     id: number,
     rating: number,
     user: User,

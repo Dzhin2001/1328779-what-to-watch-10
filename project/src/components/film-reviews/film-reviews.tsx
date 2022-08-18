@@ -1,20 +1,31 @@
-import { Reviews } from '../../types/reviews';
 import ReviewCard from '../review-card/review-card';
+import {useEffect} from 'react';
+import {fetchReviewsAction} from '../../store/api-actions';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 
 type FilmReviewsProps = {
-  reviews: Reviews,
+  id: string,
 };
 
 
-function FilmReviews({reviews}: FilmReviewsProps): JSX.Element {
-  const halfLength = Math.ceil(reviews.length / 2);
+function FilmReviews({id}: FilmReviewsProps): JSX.Element {
+  const {reviews} = useAppSelector((state) => state);
+  const getHalfLength = () => (Math.ceil(reviews.length / 2));
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchReviewsAction(id));
+    }
+  }, [id]);
+
   return (
     <div className="film-card__reviews film-card__row">
 
       <div className="film-card__reviews-col">
 
         {
-          reviews.slice(0,halfLength).map((review) => (
+          reviews.slice(0,getHalfLength()).map((review) => (
             <ReviewCard
               key={ review.id }
               review={ review }
@@ -27,7 +38,7 @@ function FilmReviews({reviews}: FilmReviewsProps): JSX.Element {
       <div className="film-card__reviews-col">
 
         {
-          reviews.slice(halfLength).map((review) => (
+          reviews.slice(getHalfLength()).map((review) => (
             <ReviewCard
               key={ review.id }
               review={ review }

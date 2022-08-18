@@ -1,8 +1,6 @@
 import {useState} from 'react';
 
-
 function NewReview(): JSX.Element {
-
   const reviewChangeHandle = (evt: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     const {name, value} = evt.target;
     setNewReview({...newReview, [name]: value});
