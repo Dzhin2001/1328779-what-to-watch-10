@@ -6,8 +6,8 @@ import Footer from '../../components/footer/footer';
 import NotFoundScreen from '../../components/error-404/not-found-screen';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {DEFAULT_FILM_COUNT} from '../../const';
-import {setPromoFilm} from '../../store/action';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import {fetchPromoAction} from '../../store/api-actions';
 
 function Main(): JSX.Element {
   const {promoFilm, filteredFilms} = useAppSelector((state) => state);
@@ -18,7 +18,10 @@ function Main(): JSX.Element {
     setFilmsCount(getFilmsCount(filmsCount + DEFAULT_FILM_COUNT ));
   };
 
-  dispatch(setPromoFilm());
+  useEffect(() => {
+    dispatch(fetchPromoAction());
+  }, []);
+
 
   if (promoFilm) {
     return (

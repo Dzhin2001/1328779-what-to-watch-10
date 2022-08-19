@@ -8,9 +8,8 @@ import {loginAction} from '../../store/api-actions';
 import {AuthData} from '../../types/auth-data';
 
 function SignIn(): JSX.Element {
-  const loginRef = useRef<HTMLInputElement | null>(null);
+  const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -21,13 +20,14 @@ function SignIn(): JSX.Element {
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (loginRef.current !== null && passwordRef.current !== null) {
+    if (emailRef.current !== null && passwordRef.current !== null) {
       onSubmit({
-        email: loginRef.current.value,
+        email: emailRef.current.value,
         password: passwordRef.current.value,
       });
     }
   };
+
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -45,7 +45,7 @@ function SignIn(): JSX.Element {
           <div className="sign-in__fields">
             <div className="sign-in__field">
               <input
-                ref={loginRef}
+                ref={emailRef}
                 className="sign-in__input"
                 type="email"
                 placeholder="Email address"

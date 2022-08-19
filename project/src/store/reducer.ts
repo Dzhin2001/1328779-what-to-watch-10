@@ -10,12 +10,14 @@ import {
   loadFavoriteFilms,
   requireAuthorization,
   setDataLoadedStatus,
-  setError, setPromoFilm,
+  setUserData,
+  setError,
 } from './action';
 import {Films, Film, Genre} from '../types/films';
 import {Reviews} from '../types/reviews';
 import {DEFAULT_GENRE, AuthorizationStatus} from '../const';
 import {getGenres, getFiltredFilms} from '../utils/films';
+import {UserData} from '../types/user-data';
 
 type InitialState = {
   genre: Genre,
@@ -29,6 +31,7 @@ type InitialState = {
   favoriteFilms: Films,
   reviews: Reviews,
   authorizationStatus: AuthorizationStatus,
+  userData: UserData | null,
   isDataLoaded: boolean,
   error: string | null,
 }
@@ -45,6 +48,7 @@ const initialState: InitialState = {
   favoriteFilms: [],
   reviews: [],
   authorizationStatus: AuthorizationStatus.Unknown,
+  userData: null,
   isDataLoaded: false,
   error: null,
 };
@@ -65,34 +69,37 @@ const reducer = createReducer(initialState, (builder) => {
       state.initialFilms = action.payload;
       state.genres = getGenres(action.payload);
       state.filteredFilms = getFiltredFilms(action.payload, state.actualGenre);
+      state.isDataLoaded = false;
     })
     .addCase(loadFilm, (state, action) => {
       state.film = action.payload;
+      state.isDataLoaded = false;
     })
     .addCase(loadSimilarFilms, (state, action) => {
       state.similarFilms = action.payload;
+      state.isDataLoaded = false;
     })
     .addCase(loadPromo, (state, action) => {
       state.promoFilm = action.payload;
-    })
-    .addCase(setPromoFilm, (state) => {
-      if (state.film && state.promoFilm) {
-        if (state.film.id !== state.promoFilm.id) {
-          state.film = state.promoFilm;
-        }
-      }
+      state.film = action.payload;
+      state.isDataLoaded = false;
     })
     .addCase(loadReviews, (state, action) => {
       state.reviews = action.payload;
+      state.isDataLoaded = false;
     })
     .addCase(loadFavoriteFilms, (state, action) => {
       state.favoriteFilms = action.payload;
+      state.isDataLoaded = false;
     })
     .addCase(setDataLoadedStatus, (state, action) => {
       state.isDataLoaded = action.payload;
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
+    })
+    .addCase(setUserData, (state, action) => {
+      state.userData = action.payload;
     })
     .addCase(setError, (state, action) => {
       state.error = action.payload;

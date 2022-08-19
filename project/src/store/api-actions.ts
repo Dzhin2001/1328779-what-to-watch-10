@@ -12,7 +12,7 @@ import {
   loadFavoriteFilms,
   requireAuthorization,
   setDataLoadedStatus,
-  setError
+  setError, setUserData
 } from './action';
 import {saveToken, dropToken} from '../services/token';
 import {APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR} from '../const';
@@ -40,7 +40,6 @@ export const fetchFilmsAction = createAsyncThunk<void, undefined, {
     const {data} = await api.get<Films>(APIRoute.Films);
     dispatch(setDataLoadedStatus(true));
     dispatch(loadFilms(data));
-    dispatch(setDataLoadedStatus(false));
   },
 );
 
@@ -54,7 +53,6 @@ export const fetchFilmAction = createAsyncThunk<void, string, {
     const {data} = await api.get<Film>(`${APIRoute.Films}/${_arg}`);
     dispatch(setDataLoadedStatus(true));
     dispatch(loadFilm(data));
-    dispatch(setDataLoadedStatus(false));
   },
 );
 
@@ -68,7 +66,6 @@ export const fetchSimilarFilmsAction = createAsyncThunk<void, string, {
     const {data} = await api.get<Films>(`${APIRoute.Films}/${_arg}/similar`);
     dispatch(setDataLoadedStatus(true));
     dispatch(loadSimilarFilms(data));
-    dispatch(setDataLoadedStatus(false));
   },
 );
 
@@ -82,7 +79,6 @@ export const fetchPromoAction = createAsyncThunk<void, undefined, {
     const {data} = await api.get<Film>(APIRoute.Promo);
     dispatch(setDataLoadedStatus(true));
     dispatch(loadPromo(data));
-    dispatch(setDataLoadedStatus(false));
   },
 );
 
@@ -96,7 +92,6 @@ export const fetchFavoriteFilmsAction = createAsyncThunk<void, undefined, {
     const {data} = await api.get<Films>(APIRoute.Favorite);
     dispatch(setDataLoadedStatus(true));
     dispatch(loadFavoriteFilms(data));
-    dispatch(setDataLoadedStatus(false));
   },
 );
 
@@ -110,7 +105,6 @@ export const fetchReviewsAction = createAsyncThunk<void, string, {
     const {data} = await api.get<Reviews>(`${APIRoute.Comments}/${_arg}`);
     dispatch(setDataLoadedStatus(true));
     dispatch(loadReviews(data));
-    dispatch(setDataLoadedStatus(false));
   },
 );
 
@@ -137,8 +131,9 @@ export const loginAction = createAsyncThunk<void, AuthData, {
 }>(
   'user/login',
   async ({email: email, password}, {dispatch, extra: api}) => {
-    const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
-    saveToken(token);
+    const {data: userData} = await api.post<UserData>(APIRoute.Login, {email, password});
+    saveToken(userData.token);
+    dispatch(setUserData(userData));
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
   },
 );
