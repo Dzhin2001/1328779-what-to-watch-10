@@ -1,21 +1,27 @@
-import {Reviews} from '../../types/reviews';
 import { useParams } from 'react-router-dom';
 import NotFoundScreen from '../../components/error-404/not-found-screen';
 import Logo from '../../components/logo/logo';
+import UserBlock from '../../components/user-block/user-block';
+import Footer from '../../components/footer/footer';
 import FilmTabs from '../../components/film-tabs/film-tabs';
 import FilmList from '../../components/film-list/film-list';
-import {getSimilarFilms} from '../../utils/films';
 import {DEFAULT_LIKED_FILM_COUNT} from '../../const';
-import {useAppSelector} from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {fetchFilmAction, fetchSimilarFilmsAction} from '../../store/api-actions';
+import {useEffect} from 'react';
 
-type MoviePageProps = {
-  reviews: Reviews,
-};
-
-function MoviePage({reviews}: MoviePageProps): JSX.Element {
-  const {initialFilms} = useAppSelector((state) => state);
+function MoviePage(): JSX.Element {
+  const {film, similarFilms} = useAppSelector((state) => state);
   const { id } = useParams();
-  const film = initialFilms.find((element) => element.id.toString() === id);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchFilmAction(id));
+      dispatch(fetchSimilarFilmsAction(id));
+    }
+  }, [id]);
+
   if (film) {
     return (
       <>
@@ -29,17 +35,7 @@ function MoviePage({reviews}: MoviePageProps): JSX.Element {
 
             <header className="page-header film-card__head">
               <Logo />
-
-              <ul className="user-block">
-                <li className="user-block__item">
-                  <div className="user-block__avatar">
-                    <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-                  </div>
-                </li>
-                <li className="user-block__item">
-                  <a className="user-block__link">Sign out</a>
-                </li>
-              </ul>
+              <UserBlock />
             </header>
 
             <div className="film-card__wrap">
@@ -78,7 +74,6 @@ function MoviePage({reviews}: MoviePageProps): JSX.Element {
 
               <FilmTabs
                 film={film}
-                reviews={reviews}
               />
 
             </div>
@@ -90,25 +85,14 @@ function MoviePage({reviews}: MoviePageProps): JSX.Element {
             <h2 className="catalog__title">More like this</h2>
 
             <FilmList
-              films={ getSimilarFilms(initialFilms, film) }
+              films={ similarFilms }
               filmsCount={DEFAULT_LIKED_FILM_COUNT}
             />
 
           </section>
 
-          <footer className="page-footer">
-            <div className="logo">
-              <a href="main.html" className="logo__link logo__link--light">
-                <span className="logo__letter logo__letter--1">W</span>
-                <span className="logo__letter logo__letter--2">T</span>
-                <span className="logo__letter logo__letter--3">W</span>
-              </a>
-            </div>
+          <Footer />
 
-            <div className="copyright">
-              <p>© 2019 What to watch Ltd.</p>
-            </div>
-          </footer>
         </div>
       </>
     );

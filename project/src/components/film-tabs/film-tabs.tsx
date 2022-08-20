@@ -1,5 +1,4 @@
 import { Film } from '../../types/films';
-import {Reviews} from '../../types/reviews';
 import FilmOverview from '../../components/film-overview/film-overview';
 import FilmDetails from '../../components/film-details/film-details';
 import FilmReviews from '../../components/film-reviews/film-reviews';
@@ -7,20 +6,19 @@ import {useState} from 'react';
 
 type FilmTabsProps = {
   film: Film,
-  reviews: Reviews,
 };
 
-function FilmTabs({film, reviews}: FilmTabsProps): JSX.Element {
+function FilmTabs({film}: FilmTabsProps): JSX.Element {
   const [activeTab, setActiveTab] = useState('overview');
   const getComponentByType = () => {
     switch(activeTab) {
       case 'default':
       case 'overview':
-        return <FilmOverview film={film}/>;
+        return <FilmOverview film={film} />;
       case 'details':
-        return <FilmDetails film={film}/>;
+        return <FilmDetails film={film} />;
       case 'reviews':
-        return <FilmReviews reviews={reviews}/>;
+        return <FilmReviews id={film.id.toString()} />;
     }
   };
   return (

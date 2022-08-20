@@ -1,16 +1,23 @@
 import Logo from '../../components/logo/logo';
-import {Films} from '../../types/films';
-import {Link, useParams} from 'react-router-dom';
-import NotFoundScreen from '../../components/error-404/not-found-screen';
 import NewReview from '../../components/new-review/new-review';
+import UserBlock from '../../components/user-block/user-block';
+import NotFoundScreen from '../../components/error-404/not-found-screen';
+import {Link, useParams} from 'react-router-dom';
+import {useEffect} from 'react';
+import {fetchFilmAction} from '../../store/api-actions';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 
-type AddReviewProps = {
-  films: Films,
-};
-
-function AddReview({films}: AddReviewProps): JSX.Element {
+function AddReview(): JSX.Element {
+  const film = useAppSelector((state) => state.film);
   const { id } = useParams();
-  const film = films.find((element) => element.id.toString() === id);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchFilmAction(id));
+    }
+  }, [id]);
+
   if (film) {
     return (
       <section className="film-card film-card--full">
@@ -35,16 +42,7 @@ function AddReview({films}: AddReviewProps): JSX.Element {
               </ul>
             </nav>
 
-            <ul className="user-block">
-              <li className="user-block__item">
-                <div className="user-block__avatar">
-                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-                </div>
-              </li>
-              <li className="user-block__item">
-                <a className="user-block__link">Sign out</a>
-              </li>
-            </ul>
+            <UserBlock />
           </header>
 
           <div className="film-card__poster film-card__poster--small">
