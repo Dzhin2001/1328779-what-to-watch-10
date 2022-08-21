@@ -1,13 +1,14 @@
-import {AppRoute} from '../../const';
+import {AppRoute, AuthorizationStatus} from '../../const';
 import Logo from '../../components/logo/logo';
 import Footer from '../../components/footer/footer';
-import {useRef, FormEvent} from 'react';
+import {useRef, FormEvent, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {useAppDispatch} from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {loginAction} from '../../store/api-actions';
 import {AuthData} from '../../types/auth-data';
 
 function SignIn(): JSX.Element {
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useAppDispatch();
@@ -16,6 +17,12 @@ function SignIn(): JSX.Element {
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
   };
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      navigate(AppRoute.Main);
+    }
+  }, [authorizationStatus]);
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -68,7 +75,6 @@ function SignIn(): JSX.Element {
           </div>
           <div className="sign-in__submit">
             <button
-              onClick={() => navigate(AppRoute.Main)}
               className="sign-in__btn"
               type="submit"
             >

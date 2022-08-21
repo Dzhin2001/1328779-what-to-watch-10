@@ -24,7 +24,7 @@ export const setDataLoadedStatus = createAction<boolean>('data/setDataLoadedStat
 
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 
-export const setUserData = createAction<UserData>('films/setUserData');
+export const setUserData = createAction<UserData | null>('films/setUserData');
 
 export const setError = createAction<string | null>('game/setError');
 
