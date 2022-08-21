@@ -1,4 +1,4 @@
-import {Route, BrowserRouter, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import {useAppSelector} from '../../hooks';
 import {AppRoute} from '../../const';
 import Main from '../../pages/main/main';
