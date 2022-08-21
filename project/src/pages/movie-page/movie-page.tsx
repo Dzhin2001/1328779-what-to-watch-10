@@ -5,13 +5,14 @@ import UserBlock from '../../components/user-block/user-block';
 import Footer from '../../components/footer/footer';
 import FilmTabs from '../../components/film-tabs/film-tabs';
 import FilmList from '../../components/film-list/film-list';
-import {DEFAULT_LIKED_FILM_COUNT} from '../../const';
+import {DEFAULT_LIKED_FILM_COUNT, AuthorizationStatus} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchFilmAction, fetchSimilarFilmsAction} from '../../store/api-actions';
 import {useEffect} from 'react';
+import {Link} from 'react-router-dom';
 
 function MoviePage(): JSX.Element {
-  const {film, similarFilms} = useAppSelector((state) => state);
+  const {film, similarFilms, authorizationStatus} = useAppSelector((state) => state);
   const { id } = useParams();
   const dispatch = useAppDispatch();
 
@@ -60,7 +61,10 @@ function MoviePage(): JSX.Element {
                     <span>My list</span>
                     <span className="film-card__count">9</span>
                   </button>
-                  <a href="add-review.html" className="btn film-card__button">Add review</a>
+                  {
+                    authorizationStatus === AuthorizationStatus.Auth &&
+                    <Link to={'review'} className="btn film-card__button">Add review</Link>
+                  }
                 </div>
               </div>
             </div>
