@@ -11,6 +11,8 @@ import NotFoundScreen from '../error-404/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import {isCheckedAuth} from '../../utils/films';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
 
 function App( ): JSX.Element {
   const {authorizationStatus, isDataLoaded} = useAppSelector((state) => state);
@@ -20,7 +22,7 @@ function App( ): JSX.Element {
     );
   }
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
           path={AppRoute.Main}
@@ -55,7 +57,7 @@ function App( ): JSX.Element {
           element={<NotFoundScreen />}
         />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 

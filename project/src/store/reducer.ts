@@ -12,10 +12,11 @@ import {
   setDataLoadedStatus,
   setUserData,
   setError,
+  redirectToRoute,
 } from './action';
 import {Films, Film, Genre} from '../types/films';
 import {Reviews} from '../types/reviews';
-import {DEFAULT_GENRE, AuthorizationStatus} from '../const';
+import {DEFAULT_GENRE, AppRoute, AuthorizationStatus} from '../const';
 import {getGenres, getFiltredFilms} from '../utils/films';
 import {UserData} from '../types/user-data';
 

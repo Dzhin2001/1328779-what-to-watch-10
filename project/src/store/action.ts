@@ -1,7 +1,7 @@
 import {createAction} from '@reduxjs/toolkit';
 import {Films, Film, Genre} from '../types/films';
 import {Reviews} from '../types/reviews';
-import {AuthorizationStatus} from '../const';
+import {AppRoute, AuthorizationStatus} from '../const';
 import {UserData} from '../types/user-data';
 
 export const filterFilms = createAction('films/initFilms');
@@ -26,5 +26,6 @@ export const requireAuthorization = createAction<AuthorizationStatus>('user/requ
 
 export const setUserData = createAction<UserData | null>('films/setUserData');
 
-export const setError = createAction<string | null>('game/setError');
+export const setError = createAction<string | null>('film/setError');
 
+export const redirectToRoute = createAction<AppRoute>('film/redirectToRoute');

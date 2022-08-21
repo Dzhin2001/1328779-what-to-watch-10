@@ -12,10 +12,12 @@ import {
   loadFavoriteFilms,
   requireAuthorization,
   setDataLoadedStatus,
-  setError, setUserData
+  setError,
+  setUserData,
+  redirectToRoute,
 } from './action';
 import {saveToken, dropToken} from '../services/token';
-import {APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR} from '../const';
+import {APIRoute, AuthorizationStatus, AppRoute, TIMEOUT_SHOW_ERROR} from '../const';
 import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
 import {store} from './';
@@ -135,6 +137,7 @@ export const loginAction = createAsyncThunk<void, AuthData, {
     saveToken(userData.token);
     dispatch(setUserData(userData));
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    dispatch(redirectToRoute(AppRoute.Main));
   },
 );
 
