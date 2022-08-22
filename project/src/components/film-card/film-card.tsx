@@ -43,7 +43,7 @@ function FilmCard({film, setActiveCard}: FilmCardProps): JSX.Element {
         <video
           ref={ref}
           src={film.previewVideoLink}
-          poster={film.posterImage}
+          poster={film.previewImage}
           muted
           width="280"
           height="175"
