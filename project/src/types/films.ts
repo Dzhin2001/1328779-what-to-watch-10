@@ -22,3 +22,8 @@ export type Film =
     released: number,
     isFavorite: boolean,
   };
+export type FavoriteFilm =
+  {
+    id: number,
+    status: number,
+  };

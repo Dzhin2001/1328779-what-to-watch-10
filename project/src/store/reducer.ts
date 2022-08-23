@@ -93,7 +93,6 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadFavoriteFilms, (state, action) => {
       state.favoriteFilms = action.payload;
-      state.isDataLoaded = false;
     })
     .addCase(setDataLoadedStatus, (state, action) => {
       state.isDataLoaded = action.payload;

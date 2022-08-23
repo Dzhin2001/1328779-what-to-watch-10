@@ -9,6 +9,7 @@ import {useAppDispatch, useAppSelector} from '../../hooks';
 import {DEFAULT_FILM_COUNT} from '../../const';
 import {useEffect, useState} from 'react';
 import {fetchPromoAction} from '../../store/api-actions';
+import ButtonList from '../../components/button-list/button-list';
 
 function Main(): JSX.Element {
   const {promoFilm, filteredFilms} = useAppSelector((state) => state);
@@ -53,14 +54,11 @@ function Main(): JSX.Element {
                 </p>
 
                 <div className="film-card__buttons">
+
                   <ButtonPlay />
-                  <button className="btn btn--list film-card__button" type="button">
-                    <svg viewBox="0 0 19 20" width="19" height="20">
-                      <use xlinkHref="#add"></use>
-                    </svg>
-                    <span>My list</span>
-                    <span className="film-card__count">9</span>
-                  </button>
+
+                  <ButtonList />
+
                 </div>
               </div>
             </div>

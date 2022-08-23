@@ -1,8 +1,8 @@
-import {useNavigate} from 'react-router-dom';
-import {useAppSelector} from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {redirectToRoute} from '../../store/action';
 
 function ButtonPlay(): JSX.Element {
-  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const {film} = useAppSelector((state) => state);
 
   return (
@@ -11,7 +11,7 @@ function ButtonPlay(): JSX.Element {
       type="button"
       onClick={ () => {
         if (film) {
-          navigate(`player/${film.id}`);
+          dispatch(redirectToRoute(`player/${film.id}`));
         }
       }}
     >

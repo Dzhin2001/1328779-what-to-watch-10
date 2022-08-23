@@ -1,7 +1,7 @@
 import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state.js';
-import {Films, Film} from '../types/films';
+import {Films, Film, FavoriteFilm} from '../types/films';
 import {Reviews, UserReview} from '../types/reviews';
 import {
   loadFilms,
@@ -93,8 +93,19 @@ export const fetchFavoriteFilmsAction = createAsyncThunk<void, undefined, {
   'data/fetchFavorite',
   async (_arg, {dispatch, extra: api}) => {
     const {data} = await api.get<Films>(APIRoute.Favorite);
-    dispatch(setDataLoadedStatus(true));
     dispatch(loadFavoriteFilms(data));
+  },
+);
+
+export const postFavoriteFilmAction = createAsyncThunk<void, FavoriteFilm, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/postFavoriteFilm',
+  async (_arg, {dispatch, extra: api}) => {
+    const {data} = await api.post<Film>(`${APIRoute.Favorite}/${_arg.id}/${_arg.status}`);
+    dispatch(loadFilm(data));
   },
 );
 
@@ -140,8 +151,10 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
       const {data: userData} = await api.get<UserData>(APIRoute.Login);
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
       dispatch(setUserData(userData));
+      dispatch(fetchFavoriteFilmsAction());
     } catch {
       dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+      dispatch(loadFavoriteFilms([]));
     }
   },
 );
@@ -153,11 +166,17 @@ export const loginAction = createAsyncThunk<void, AuthData, {
 }>(
   'user/login',
   async ({email, password}, {dispatch, extra: api}) => {
-    const {data: userData} = await api.post<UserData>(APIRoute.Login, {email, password});
-    saveToken(userData.token);
-    dispatch(setUserData(userData));
-    dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    dispatch(redirectToRoute(AppRoute.Main));
+    try {
+      const {data: userData} = await api.post<UserData>(APIRoute.Login, {email, password});
+      saveToken(userData.token);
+      dispatch(setUserData(userData));
+      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      dispatch(redirectToRoute(AppRoute.Main));
+      dispatch(fetchFavoriteFilmsAction());
+    } catch {
+      dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+      dispatch(loadFavoriteFilms([]));
+    }
   },
 );
 
@@ -172,5 +191,6 @@ export const logoutAction = createAsyncThunk<void, undefined, {
     dropToken();
     dispatch(setUserData(null));
     dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    dispatch(loadFavoriteFilms([]));
   },
 );

@@ -8,9 +8,10 @@ import FilmList from '../../components/film-list/film-list';
 import ButtonPlay from '../../components/button-play/button-play';
 import {DEFAULT_LIKED_FILM_COUNT, AuthorizationStatus} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {fetchFavoriteFilmsAction, fetchFilmAction, fetchSimilarFilmsAction} from '../../store/api-actions';
+import {fetchFilmAction, fetchSimilarFilmsAction} from '../../store/api-actions';
 import {useEffect} from 'react';
 import {Link} from 'react-router-dom';
+import ButtonList from '../../components/button-list/button-list';
 
 function MoviePage(): JSX.Element {
   const {film, similarFilms, authorizationStatus} = useAppSelector((state) => state);
@@ -21,9 +22,6 @@ function MoviePage(): JSX.Element {
     if (id) {
       dispatch(fetchFilmAction(id));
       dispatch(fetchSimilarFilmsAction(id));
-      if(authorizationStatus === AuthorizationStatus.Auth) {
-        dispatch(fetchFavoriteFilmsAction());
-      }
     }
   }, [id]);
 
@@ -54,17 +52,14 @@ function MoviePage(): JSX.Element {
                 <div className="film-card__buttons">
 
                   <ButtonPlay />
-                  <button className="btn btn--list film-card__button" type="button">
-                    <svg viewBox="0 0 19 20" width="19" height="20">
-                      <use xlinkHref="#add"></use>
-                    </svg>
-                    <span>My list</span>
-                    <span className="film-card__count">9</span>
-                  </button>
+
+                  <ButtonList />
+
                   {
                     authorizationStatus === AuthorizationStatus.Auth &&
                     <Link to={'review'} className="btn film-card__button">Add review</Link>
                   }
+
                 </div>
               </div>
             </div>
