@@ -14,7 +14,8 @@ import {
   setDataLoadedStatus,
   setError,
   setUserData,
-  redirectToRoute, setFormBlockedStatus,
+  redirectToRoute,
+  setFormBlockedStatus,
 } from './action';
 import {saveToken, dropToken} from '../services/token';
 import {APIRoute, AuthorizationStatus, AppRoute, TIMEOUT_SHOW_ERROR} from '../const';
@@ -117,9 +118,14 @@ export const postNewReviewAction = createAsyncThunk<void, UserReview, {
 }>(
   'data/postNewReview',
   async (_arg, {dispatch, extra: api}) => {
-    const {data} = await api.post<Reviews>(`${APIRoute.Comments}/${_arg.idFilm}`, _arg.newComment);
-    dispatch(setFormBlockedStatus(true));
-    dispatch(loadReviews(data));
+    try {
+      const {data} = await api.post<Reviews>(`${APIRoute.Comments}/${_arg.idFilm}`, _arg.newComment);
+      dispatch(setFormBlockedStatus(true));
+      dispatch(loadReviews(data));
+      dispatch(redirectToRoute(`films/${_arg.idFilm}`));
+    } catch {
+      dispatch(setFormBlockedStatus(false));
+    }
   },
 );
 

@@ -5,9 +5,10 @@ import UserBlock from '../../components/user-block/user-block';
 import Footer from '../../components/footer/footer';
 import FilmTabs from '../../components/film-tabs/film-tabs';
 import FilmList from '../../components/film-list/film-list';
+import ButtonPlay from '../../components/button-play/button-play';
 import {DEFAULT_LIKED_FILM_COUNT, AuthorizationStatus} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {fetchFilmAction, fetchSimilarFilmsAction} from '../../store/api-actions';
+import {fetchFavoriteFilmsAction, fetchFilmAction, fetchSimilarFilmsAction} from '../../store/api-actions';
 import {useEffect} from 'react';
 import {Link} from 'react-router-dom';
 
@@ -20,6 +21,9 @@ function MoviePage(): JSX.Element {
     if (id) {
       dispatch(fetchFilmAction(id));
       dispatch(fetchSimilarFilmsAction(id));
+      if(authorizationStatus === AuthorizationStatus.Auth) {
+        dispatch(fetchFavoriteFilmsAction());
+      }
     }
   }, [id]);
 
@@ -48,12 +52,8 @@ function MoviePage(): JSX.Element {
                 </p>
 
                 <div className="film-card__buttons">
-                  <button className="btn btn--play film-card__button" type="button">
-                    <svg viewBox="0 0 19 19" width="19" height="19">
-                      <use xlinkHref="#play-s"></use>
-                    </svg>
-                    <span>Play</span>
-                  </button>
+
+                  <ButtonPlay />
                   <button className="btn btn--list film-card__button" type="button">
                     <svg viewBox="0 0 19 20" width="19" height="20">
                       <use xlinkHref="#add"></use>

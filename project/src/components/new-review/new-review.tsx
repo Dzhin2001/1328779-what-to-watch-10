@@ -41,7 +41,11 @@ function NewReview(): JSX.Element {
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (newReview.reviewText !== null && film !== null ) {
+    if (newReview.reviewText !== null
+      && film !== null
+      && newReview.reviewText.length >= 50
+      && newReview.reviewText.length <= 400
+    ) {
       onSubmit({
         idFilm: film.id,
         newComment: {

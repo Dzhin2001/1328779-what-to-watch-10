@@ -3,6 +3,7 @@ import {Films, Film, Genre} from '../types/films';
 import {Reviews} from '../types/reviews';
 import {AppRoute, AuthorizationStatus} from '../const';
 import {UserData} from '../types/user-data';
+import * as querystring from "querystring";
 
 export const filterFilms = createAction('films/initFilms');
 
@@ -30,4 +31,4 @@ export const setUserData = createAction<UserData | null>('films/setUserData');
 
 export const setError = createAction<string | null>('film/setError');
 
-export const redirectToRoute = createAction<AppRoute>('film/redirectToRoute');
+export const redirectToRoute = createAction<string>('film/redirectToRoute');
