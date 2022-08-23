@@ -26,8 +26,10 @@ export const setFormBlockedStatus = createAction<boolean>('data/setFormBlockedSt
 
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 
-export const setUserData = createAction<UserData | null>('films/setUserData');
+export const setUserData = createAction<UserData | null>('user/setUserData');
 
-export const setError = createAction<string | null>('film/setError');
+export const setError = createAction<string | null>('user/setError');
 
-export const redirectToRoute = createAction<string>('film/redirectToRoute');
+export const redirectToRoute = createAction<string>('route/redirectToRoute');
+
+export const redirectToBack = createAction('route/redirectToBack');

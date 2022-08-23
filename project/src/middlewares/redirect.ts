@@ -8,8 +8,10 @@ export const redirect: Middleware<unknown, Reducer> =
   (_store) =>
     (next) =>
       (action) => {
-        if (action.type === 'film/redirectToRoute') {
+        if (action.type === 'route/redirectToRoute') {
           browserHistory.push(action.payload);
+        } else if (action.type === 'route/redirectToBack') {
+          browserHistory.back();
         }
 
         return next(action);
