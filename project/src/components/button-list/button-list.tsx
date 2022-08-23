@@ -1,10 +1,6 @@
-import {useAppSelector} from "../../hooks";
+import {useAppSelector} from '../../hooks';
 
-type ButtonListProps = {
-  cardCount: number,
-}
-
-function ButtonList({cardCount}: ButtonListProps): JSX.Element {
+function ButtonList(): JSX.Element {
   const {favoriteFilms} = useAppSelector((state) => state);
   return (
     <button className="btn btn--list film-card__button" type="button">
@@ -12,7 +8,7 @@ function ButtonList({cardCount}: ButtonListProps): JSX.Element {
         <use xlinkHref="#add"></use>
       </svg>
       <span>My list</span>
-      <span className="film-card__count">{cardCount}</span>
+      <span className="film-card__count">{favoriteFilms.length}</span>
     </button>
   );
 }

@@ -1,9 +1,8 @@
 import {createAction} from '@reduxjs/toolkit';
 import {Films, Film, Genre} from '../types/films';
 import {Reviews} from '../types/reviews';
-import {AppRoute, AuthorizationStatus} from '../const';
+import {AuthorizationStatus} from '../const';
 import {UserData} from '../types/user-data';
-import * as querystring from "querystring";
 
 export const filterFilms = createAction('films/initFilms');
 

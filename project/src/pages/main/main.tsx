@@ -8,7 +8,7 @@ import ButtonPlay from '../../components/button-play/button-play';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {DEFAULT_FILM_COUNT} from '../../const';
 import {useEffect, useState} from 'react';
-import {fetchFavoriteFilmsAction, fetchPromoAction} from '../../store/api-actions';
+import {fetchPromoAction} from '../../store/api-actions';
 
 function Main(): JSX.Element {
   const {promoFilm, filteredFilms} = useAppSelector((state) => state);
