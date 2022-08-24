@@ -1,19 +1,12 @@
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {Link, useNavigate} from 'react-router-dom';
-import {fetchFilmAction, logoutAction} from '../../store/api-actions';
-import {useEffect} from 'react';
+import {logoutAction} from '../../store/api-actions';
 
 function UserBlock(): JSX.Element {
-  const {film, userData, authorizationStatus} = useAppSelector((state) => state);
+  const {userData, authorizationStatus} = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if(film) {
-      dispatch(fetchFilmAction(film.id.toString()));
-    }
-  }, [authorizationStatus]);
 
   if (authorizationStatus === AuthorizationStatus.Auth && userData) {
     return (
