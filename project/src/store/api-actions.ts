@@ -1,8 +1,8 @@
 import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state.js';
-import {Films, Film} from '../types/films';
-import {Reviews} from '../types/reviews';
+import {Films, Film, FavoriteFilm} from '../types/films';
+import {Reviews, UserReview} from '../types/reviews';
 import {
   loadFilms,
   loadFilm,
@@ -12,10 +12,13 @@ import {
   loadFavoriteFilms,
   requireAuthorization,
   setDataLoadedStatus,
-  setError, setUserData
+  setError,
+  setUserData,
+  redirectToRoute,
+  setFormBlockedStatus,
 } from './action';
 import {saveToken, dropToken} from '../services/token';
-import {APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR} from '../const';
+import {APIRoute, AuthorizationStatus, AppRoute, TIMEOUT_SHOW_ERROR} from '../const';
 import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
 import {store} from './';
@@ -90,8 +93,19 @@ export const fetchFavoriteFilmsAction = createAsyncThunk<void, undefined, {
   'data/fetchFavorite',
   async (_arg, {dispatch, extra: api}) => {
     const {data} = await api.get<Films>(APIRoute.Favorite);
-    dispatch(setDataLoadedStatus(true));
     dispatch(loadFavoriteFilms(data));
+  },
+);
+
+export const postFavoriteFilmAction = createAsyncThunk<void, FavoriteFilm, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/postFavoriteFilm',
+  async (_arg, {dispatch, extra: api}) => {
+    const {data} = await api.post<Film>(`${APIRoute.Favorite}/${_arg.id}/${_arg.status}`);
+    dispatch(loadFilm(data));
   },
 );
 
@@ -108,6 +122,24 @@ export const fetchReviewsAction = createAsyncThunk<void, string, {
   },
 );
 
+export const postNewReviewAction = createAsyncThunk<void, UserReview, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/postNewReview',
+  async (_arg, {dispatch, extra: api}) => {
+    try {
+      const {data} = await api.post<Reviews>(`${APIRoute.Comments}/${_arg.idFilm}`, _arg.newComment);
+      dispatch(setFormBlockedStatus(true));
+      dispatch(loadReviews(data));
+      dispatch(redirectToRoute(`films/${_arg.idFilm}`));
+    } catch {
+      dispatch(setFormBlockedStatus(false));
+    }
+  },
+);
+
 export const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch,
   state: State,
@@ -116,10 +148,13 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
   'user/checkAuth',
   async (_arg, {dispatch, extra: api}) => {
     try {
-      await api.get(APIRoute.Login);
+      const {data: userData} = await api.get<UserData>(APIRoute.Login);
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      dispatch(setUserData(userData));
+      dispatch(fetchFavoriteFilmsAction());
     } catch {
       dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+      dispatch(loadFavoriteFilms([]));
     }
   },
 );
@@ -130,11 +165,18 @@ export const loginAction = createAsyncThunk<void, AuthData, {
   extra: AxiosInstance
 }>(
   'user/login',
-  async ({email: email, password}, {dispatch, extra: api}) => {
-    const {data: userData} = await api.post<UserData>(APIRoute.Login, {email, password});
-    saveToken(userData.token);
-    dispatch(setUserData(userData));
-    dispatch(requireAuthorization(AuthorizationStatus.Auth));
+  async ({email, password}, {dispatch, extra: api}) => {
+    try {
+      const {data: userData} = await api.post<UserData>(APIRoute.Login, {email, password});
+      saveToken(userData.token);
+      dispatch(setUserData(userData));
+      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      dispatch(redirectToRoute(AppRoute.Main));
+      dispatch(fetchFavoriteFilmsAction());
+    } catch {
+      dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+      dispatch(loadFavoriteFilms([]));
+    }
   },
 );
 
@@ -147,6 +189,8 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   async (_arg, {dispatch, extra: api}) => {
     await api.delete(APIRoute.Logout);
     dropToken();
+    dispatch(setUserData(null));
     dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    dispatch(loadFavoriteFilms([]));
   },
 );

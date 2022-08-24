@@ -1,20 +1,26 @@
 import {AppRoute, AuthorizationStatus} from '../../const';
-import {useAppSelector} from '../../hooks';
-import {Link} from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {Link, useNavigate} from 'react-router-dom';
+import {logoutAction} from '../../store/api-actions';
 
 function UserBlock(): JSX.Element {
-  const {authorizationStatus} = useAppSelector((state) => state);
+  const {userData, authorizationStatus} = useAppSelector((state) => state);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  if (authorizationStatus === AuthorizationStatus.Auth) {
+  if (authorizationStatus === AuthorizationStatus.Auth && userData) {
     return (
       <ul className="user-block">
         <li className="user-block__item">
-          <div className="user-block__avatar">
-            <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
+          <div
+            className="user-block__avatar"
+            onClick={() => (navigate(AppRoute.MyList))}
+          >
+            <img src={userData.avatarUrl} alt="User avatar" width="63" height="63"/>
           </div>
         </li>
         <li className="user-block__item">
-          <a className="user-block__link">Sign out</a>
+          <a onClick={() => dispatch(logoutAction())} className="user-block__link">Sign out</a>
         </li>
       </ul>
     );

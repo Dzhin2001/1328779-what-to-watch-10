@@ -22,9 +22,14 @@ export const loadFavoriteFilms = createAction<Films>('data/loadFavorite');
 
 export const setDataLoadedStatus = createAction<boolean>('data/setDataLoadedStatus');
 
+export const setFormBlockedStatus = createAction<boolean>('data/setFormBlockedStatus');
+
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 
-export const setUserData = createAction<UserData>('films/setUserData');
+export const setUserData = createAction<UserData | null>('user/setUserData');
 
-export const setError = createAction<string | null>('game/setError');
+export const setError = createAction<string | null>('user/setError');
 
+export const redirectToRoute = createAction<string>('route/redirectToRoute');
+
+export const redirectToBack = createAction('route/redirectToBack');

@@ -7,9 +7,17 @@ export type User = {
   };
 
 export type Review ={
+  comment: Comment,
+  date: string,
+  id: number,
+  rating: number,
+  user: User,
+};
+
+export type UserReview ={
+  idFilm: number,
+  newComment: {
     comment: Comment,
-    date: string,
-    id: number,
     rating: number,
-    user: User,
-  };
+  }
+};

@@ -11,7 +11,7 @@ import {
   requireAuthorization,
   setDataLoadedStatus,
   setUserData,
-  setError,
+  setError, setFormBlockedStatus,
 } from './action';
 import {Films, Film, Genre} from '../types/films';
 import {Reviews} from '../types/reviews';
@@ -33,6 +33,7 @@ type InitialState = {
   authorizationStatus: AuthorizationStatus,
   userData: UserData | null,
   isDataLoaded: boolean,
+  isFormBlocked: boolean,
   error: string | null,
 }
 
@@ -50,6 +51,7 @@ const initialState: InitialState = {
   authorizationStatus: AuthorizationStatus.Unknown,
   userData: null,
   isDataLoaded: false,
+  isFormBlocked: false,
   error: null,
 };
 
@@ -87,13 +89,16 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(loadReviews, (state, action) => {
       state.reviews = action.payload;
       state.isDataLoaded = false;
+      state.isFormBlocked = false;
     })
     .addCase(loadFavoriteFilms, (state, action) => {
       state.favoriteFilms = action.payload;
-      state.isDataLoaded = false;
     })
     .addCase(setDataLoadedStatus, (state, action) => {
       state.isDataLoaded = action.payload;
+    })
+    .addCase(setFormBlockedStatus, (state, action) => {
+      state.isFormBlocked = action.payload;
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
