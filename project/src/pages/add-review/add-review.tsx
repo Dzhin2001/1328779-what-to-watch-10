@@ -1,7 +1,7 @@
 import Logo from '../../components/logo/logo';
+import LoadingScreen from '../loading-screen/loading-screen';
 import NewReview from '../../components/new-review/new-review';
 import UserBlock from '../../components/user-block/user-block';
-import NotFoundScreen from '../../components/error-404/not-found-screen';
 import {Link, useParams} from 'react-router-dom';
 import {useEffect} from 'react';
 import {fetchFilmAction} from '../../store/api-actions';
@@ -55,7 +55,7 @@ function AddReview(): JSX.Element {
       </section>
     );
   } else {
-    return <NotFoundScreen />;
+    return <LoadingScreen />;
   }
 }
 

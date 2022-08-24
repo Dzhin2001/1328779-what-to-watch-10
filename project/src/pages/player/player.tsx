@@ -1,5 +1,5 @@
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import NotFoundScreen from '../../components/error-404/not-found-screen';
+import LoadingScreen from '../loading-screen/loading-screen';
 import {redirectToBack} from '../../store/action';
 import {useState, useRef} from 'react';
 import {useParams} from 'react-router-dom';
@@ -98,7 +98,7 @@ function Player(): JSX.Element {
       </div>
     );
   } else {
-    return <NotFoundScreen />;
+    return <LoadingScreen />;
   }
 }
 

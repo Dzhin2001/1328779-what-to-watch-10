@@ -25,10 +25,6 @@ function App( ): JSX.Element {
     <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
-          path={'test'}
-          element={<LoadingScreen />}
-        />
-        <Route
           path={AppRoute.Main}
           element={<Main />}
         />
