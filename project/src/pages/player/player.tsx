@@ -72,7 +72,15 @@ function Player(): JSX.Element {
             </button>
             <div className="player__name">{film.name}</div>
 
-            <button type="button" className="player__full-screen">
+            <button
+              type="button"
+              className="player__full-screen"
+              onClick={() => {
+                if (ref.current) {
+                  ref.current.requestFullscreen();
+                }
+              }}
+            >
               <svg viewBox="0 0 27 27" width="27" height="27">
                 <use xlinkHref="#full-screen"></use>
               </svg>
