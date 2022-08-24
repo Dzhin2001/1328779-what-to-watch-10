@@ -1,12 +1,19 @@
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {Link, useNavigate} from 'react-router-dom';
-import {logoutAction} from '../../store/api-actions';
+import {fetchFilmAction, logoutAction} from '../../store/api-actions';
+import {useEffect} from 'react';
 
 function UserBlock(): JSX.Element {
-  const {userData, authorizationStatus} = useAppSelector((state) => state);
+  const {film, userData, authorizationStatus} = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if(film) {
+      dispatch(fetchFilmAction(film.id.toString()));
+    }
+  }, [authorizationStatus]);
 
   if (authorizationStatus === AuthorizationStatus.Auth && userData) {
     return (
@@ -20,7 +27,14 @@ function UserBlock(): JSX.Element {
           </div>
         </li>
         <li className="user-block__item">
-          <a onClick={() => dispatch(logoutAction())} className="user-block__link">Sign out</a>
+          <a
+            onClick={(evt) => {
+              evt.preventDefault();
+              dispatch(logoutAction());
+            }}
+            className="user-block__link"
+          >Sign out
+          </a>
         </li>
       </ul>
     );

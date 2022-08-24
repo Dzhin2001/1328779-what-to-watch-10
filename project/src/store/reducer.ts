@@ -11,7 +11,8 @@ import {
   requireAuthorization,
   setDataLoadedStatus,
   setUserData,
-  setError, setFormBlockedStatus,
+  setError,
+  setFormBlockedStatus,
 } from './action';
 import {Films, Film, Genre} from '../types/films';
 import {Reviews} from '../types/reviews';
