@@ -3,13 +3,7 @@ import NotFoundScreen from '../../components/error-404/not-found-screen';
 import {redirectToBack} from '../../store/action';
 import {useState, useRef} from 'react';
 import {useParams} from 'react-router-dom';
-
-const getMovieTimeFormatted = (secondTime: number): string => {
-  if (secondTime >= 3600) {
-    return `-${Math.trunc(secondTime / 3600)}:${Math.trunc(secondTime % 3600 / 60)}:${Math.ceil(secondTime % 60)}`;
-  }
-  return `-${Math.trunc(secondTime / 60)}:${Math.ceil(secondTime % 60)}`;
-};
+import format from 'format-duration';
 
 function Player(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -61,7 +55,7 @@ function Player(): JSX.Element {
               >Toggler
               </div>
             </div>
-            <div className="player__time-value">{getMovieTimeFormatted(videoDuration - currentTime)}</div>
+            <div className="player__time-value">{format( 1000 * (currentTime - videoDuration), { leading: true })}</div>
           </div>
 
           <div className="player__controls-row">
