@@ -3,7 +3,7 @@ import GenreList from '../../components/genre-list/genre-list';
 import Logo from '../../components/logo/logo';
 import UserBlock from '../../components/user-block/user-block';
 import Footer from '../../components/footer/footer';
-import NotFoundScreen from '../../components/error-404/not-found-screen';
+import LoadingScreen from '../loading-screen/loading-screen';
 import ButtonPlay from '../../components/button-play/button-play';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {DEFAULT_FILM_COUNT} from '../../const';
@@ -23,7 +23,6 @@ function Main(): JSX.Element {
   useEffect(() => {
     dispatch(fetchPromoAction());
   }, []);
-
 
   if (promoFilm) {
     return (
@@ -90,7 +89,7 @@ function Main(): JSX.Element {
       </>
     );
   } else {
-    return <NotFoundScreen />;
+    return <LoadingScreen />;
   }
 }
 

@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import NotFoundScreen from '../../components/error-404/not-found-screen';
+import LoadingScreen from '../loading-screen/loading-screen';
 import Logo from '../../components/logo/logo';
 import UserBlock from '../../components/user-block/user-block';
 import Footer from '../../components/footer/footer';
@@ -96,7 +96,7 @@ function MoviePage(): JSX.Element {
       </>
     );
   } else {
-    return <NotFoundScreen />;
+    return <LoadingScreen />;
   }
 }
 

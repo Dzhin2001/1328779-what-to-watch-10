@@ -1,20 +1,18 @@
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import NotFoundScreen from '../../components/error-404/not-found-screen';
+import LoadingScreen from '../loading-screen/loading-screen';
 import {redirectToBack} from '../../store/action';
 import {useState, useRef} from 'react';
-
-const getMovieTimeFormatted = (secondTime: number): string => {
-  if (secondTime >= 3600) {
-    return `-${Math.trunc(secondTime / 3600)}:${Math.trunc(secondTime % 3600 / 60)}:${Math.ceil(secondTime % 60)}`;
-  }
-  return `-${Math.trunc(secondTime / 60)}:${Math.ceil(secondTime % 60)}`;
-};
+import {useParams} from 'react-router-dom';
+import format from 'format-duration';
 
 function Player(): JSX.Element {
   const dispatch = useAppDispatch();
+  const { id } = useParams();
+  const films = useAppSelector((state) => state.initialFilms);
+  const film = films.find((element) => element.id.toString() === id);
   const [isPlay, setIsPlay] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
   const ref = useRef<HTMLVideoElement>(null);
-  const film = useAppSelector((state) => state.film);
   const videoDuration = ref.current ? ref.current.duration : 0;
 
   if (film) {
@@ -32,6 +30,7 @@ function Player(): JSX.Element {
           }}
           onPlay={() => setIsPlay(true)}
           onPause={() => setIsPlay(false)}
+          onTimeUpdate={() => setCurrentTime(ref.current ? ref.current.currentTime : 0)}
         >
         </video>
 
@@ -45,10 +44,18 @@ function Player(): JSX.Element {
         <div className="player__controls">
           <div className="player__controls-row">
             <div className="player__time">
-              <progress className="player__progress" value="30" max="100"></progress>
-              <div className="player__toggler" style={{left: '30%'}} >Toggler</div>
+              <progress
+                className="player__progress"
+                value={`${Math.ceil( currentTime / videoDuration * 100)}`} max="100"
+              >
+              </progress>
+              <div
+                className="player__toggler"
+                style={{left: `${Math.ceil( currentTime / videoDuration * 100)}%`}}
+              >Toggler
+              </div>
             </div>
-            <div className="player__time-value">{getMovieTimeFormatted(videoDuration)}</div>
+            <div className="player__time-value">{format( 1000 * (currentTime - videoDuration), { leading: true })}</div>
           </div>
 
           <div className="player__controls-row">
@@ -91,7 +98,7 @@ function Player(): JSX.Element {
       </div>
     );
   } else {
-    return <NotFoundScreen />;
+    return <LoadingScreen />;
   }
 }
 

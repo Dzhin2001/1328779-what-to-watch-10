@@ -20,7 +20,14 @@ function UserBlock(): JSX.Element {
           </div>
         </li>
         <li className="user-block__item">
-          <a onClick={() => dispatch(logoutAction())} className="user-block__link">Sign out</a>
+          <a
+            onClick={(evt) => {
+              evt.preventDefault();
+              dispatch(logoutAction());
+            }}
+            className="user-block__link"
+          >Sign out
+          </a>
         </li>
       </ul>
     );

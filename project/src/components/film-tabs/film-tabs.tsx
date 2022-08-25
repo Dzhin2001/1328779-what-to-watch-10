@@ -25,15 +25,40 @@ function FilmTabs({film}: FilmTabsProps): JSX.Element {
     <div className="film-card__desc">
       <nav className="film-nav film-card__nav">
         <ul className="film-nav__list">
+
           <li className={`film-nav__item ${activeTab === 'overview' ? 'film-nav__item--active' : ''}`}>
-            <a className="film-nav__link" onClick={()=>setActiveTab('overview')}>Overview</a>
+            <a
+              className="film-nav__link"
+              onClick={(evt) => {
+                evt.preventDefault();
+                setActiveTab('overview');
+              }}
+            >Overview
+            </a>
           </li>
+
           <li className={`film-nav__item ${activeTab === 'details' ? 'film-nav__item--active' : ''}`}>
-            <a className="film-nav__link" onClick={()=>setActiveTab('details')}>Details</a>
+            <a
+              className="film-nav__link"
+              onClick={(evt) => {
+                evt.preventDefault();
+                setActiveTab('details');
+              }}
+            >Details
+            </a>
           </li>
+
           <li className={`film-nav__item ${activeTab === 'reviews' ? 'film-nav__item--active' : ''}`}>
-            <a className="film-nav__link" onClick={()=>setActiveTab('reviews')}>Reviews</a>
+            <a
+              className="film-nav__link"
+              onClick={(evt) => {
+                evt.preventDefault();
+                setActiveTab('reviews');
+              }}
+            >Reviews
+            </a>
           </li>
+
         </ul>
       </nav>
       <div>
