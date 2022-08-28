@@ -2,7 +2,7 @@ import {store} from '../store/index.js';
 import {AuthorizationStatus} from '../const';
 import {UserData} from './user-data';
 import {Film, Films} from './films';
-import {Reviews} from "./reviews";
+import {Reviews} from './reviews';
 
 export type State = ReturnType<typeof store.getState>;
 

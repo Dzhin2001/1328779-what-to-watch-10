@@ -1,14 +1,24 @@
 import Logo from '../../components/logo/logo';
 import Footer from '../../components/footer/footer';
-import {useRef, FormEvent} from 'react';
-import {useAppDispatch} from '../../hooks';
+import {useRef, FormEvent, useEffect} from 'react';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {loginAction} from '../../store/api-actions';
 import {AuthData} from '../../types/auth-data';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
+import {redirectToRoute} from '../../store/action';
+import {AppRoute, AuthorizationStatus} from '../../const';
 
 function SignIn(): JSX.Element {
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(redirectToRoute(AppRoute.Main));
+    }
+  }, [authorizationStatus]);
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));

@@ -22,7 +22,7 @@ export const reviewData = createSlice({
         state.reviews = action.payload;
         state.isDataLoaded = false;
       })
-      .addCase(fetchReviewsAction.rejected, (state, action) => {
+      .addCase(fetchReviewsAction.rejected, (state) => {
         state.reviews = [];
         state.isDataLoaded = false;
       })

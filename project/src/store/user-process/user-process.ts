@@ -5,10 +5,9 @@ import {
   checkAuthAction,
   fetchFavoriteFilmsAction,
   loginAction,
-  logoutAction,
-  postFavoriteFilmAction
+  logoutAction, postFavoriteFilmAction
 } from '../api-actions';
-import {saveToken, dropToken} from '../../services/token';
+import {dropToken} from '../../services/token';
 
 const initialState: UserProcess = {
   authorizationStatus: AuthorizationStatus.Unknown,
@@ -23,28 +22,22 @@ export const userProcess = createSlice({
   extraReducers(builder) {
     builder
       .addCase(checkAuthAction.fulfilled, (state, action) => {
-        console.log('checkAuthAction.fulfilled');
         state.authorizationStatus = AuthorizationStatus.Auth;
         state.userData = action.payload;
-        saveToken(state.userData.token);
       })
       .addCase(checkAuthAction.rejected, (state) => {
-        console.log('checkAuthAction.rejected');
         state.authorizationStatus = AuthorizationStatus.NoAuth;
         state.userData = null;
         state.favoriteFilms = [];
-        dropToken();
       })
       .addCase(loginAction.fulfilled, (state, action) => {
         state.authorizationStatus = AuthorizationStatus.Auth;
         state.userData = action.payload;
-        saveToken(state.userData.token);
       })
       .addCase(loginAction.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
         state.userData = null;
         state.favoriteFilms = [];
-        dropToken();
       })
       .addCase(logoutAction.fulfilled, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
@@ -54,6 +47,15 @@ export const userProcess = createSlice({
       })
       .addCase(fetchFavoriteFilmsAction.fulfilled, (state, action) => {
         state.favoriteFilms = action.payload;
+      })
+      .addCase(postFavoriteFilmAction.fulfilled, (state, action) => {
+        const film = action.payload;
+        if (film.isFavorite) {
+          state.favoriteFilms = state.favoriteFilms.filter( (element) => element.id !== film.id);
+        } else
+        {
+          state.favoriteFilms.push(film);
+        }
       });
   }
 });

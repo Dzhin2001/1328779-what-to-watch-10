@@ -38,7 +38,7 @@ export const createAPI = (): AxiosInstance => {
       if (error.response && shouldDisplayError(error.response)) {
         toast.error(
           error.response.data.error, {
-            position: 'top-center',
+            position: 'top-left',
             autoClose: 2000,
             hideProgressBar: true,
             closeOnClick: true,

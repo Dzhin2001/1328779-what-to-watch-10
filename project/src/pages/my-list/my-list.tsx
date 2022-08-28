@@ -2,7 +2,6 @@ import Logo from '../../components/logo/logo';
 import FilmList from '../../components/film-list/film-list';
 import UserBlock from '../../components/user-block/user-block';
 import Footer from '../../components/footer/footer';
-import {DEFAULT_LIKED_FILM_COUNT} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {useParams} from 'react-router-dom';
 import {useEffect} from 'react';
@@ -36,7 +35,7 @@ function MyList(): JSX.Element {
 
         <FilmList
           films={favoriteFilms}
-          filmsCount={DEFAULT_LIKED_FILM_COUNT}
+          filmsCount={favoriteFilms.length}
         />
       </section>
 

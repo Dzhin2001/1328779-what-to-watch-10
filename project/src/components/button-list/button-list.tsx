@@ -1,38 +1,40 @@
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {redirectToRoute} from '../../store/action';
-import {AuthorizationStatus} from '../../const';
+import {AppRoute, AuthorizationStatus} from '../../const';
 import {FavoriteFilm} from '../../types/films';
-import {fetchFavoriteFilmsAction, postFavoriteFilmAction} from '../../store/api-actions';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
+import {postFavoriteFilmAction} from '../../store/api-actions';
 import {getAuthorizationStatus, getFavoriteFilms} from '../../store/user-process/selectors';
-import {getFilm} from '../../store/film-data/selectors';
 
-function ButtonList(): JSX.Element {
+type ButtonListProps = {
+  idFilm: number,
+};
+
+function ButtonList({idFilm}: ButtonListProps): JSX.Element {
   const dispatch = useAppDispatch();
   const favoriteFilms = useAppSelector(getFavoriteFilms);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const film = useAppSelector(getFilm);
-  const isFavorite = film ? film.isFavorite : false;
+  const findFavoriteFilmById = (id: number): boolean => (favoriteFilms.find( (element) => element.id === id ) !== undefined);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchFavoriteFilmsAction());
-  }, [isFavorite]);
+    setIsFavorite(findFavoriteFilmById(idFilm));
+  }, [favoriteFilms.length]);
 
-  const onClickBtn = (favoriteStatus: FavoriteFilm) => {
+  const onClickListBtn = (favoriteStatus: FavoriteFilm) => {
     dispatch(postFavoriteFilmAction(favoriteStatus));
   };
 
   const handleClickBtn = () => {
     if (authorizationStatus !== AuthorizationStatus.Auth) {
-      dispatch(redirectToRoute('login'));
+      dispatch(redirectToRoute(AppRoute.SignIn));
       return;
     }
-    if (film) {
-      onClickBtn({
-        id: film.id,
-        status: isFavorite ? 0 : 1,
-      });
-    }
+    setIsFavorite(!isFavorite);
+    onClickListBtn({
+      id: idFilm,
+      status: isFavorite ? 1 : 0,
+    });
   };
 
   return (

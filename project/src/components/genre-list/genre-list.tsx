@@ -2,7 +2,6 @@ import FilmList from '../../components/film-list/film-list';
 import {useState} from 'react';
 import {DEFAULT_FILM_COUNT, DEFAULT_GENRE} from '../../const';
 import {getGenres, getFilteredFilms} from '../../utils/films';
-import {Link} from 'react-router-dom';
 import {Films} from '../../types/films';
 import {memo} from 'react';
 
@@ -23,11 +22,11 @@ function GenreList({films}:GenreListProps): JSX.Element {
         {genres.map((genre) => (
           <li key={genre} className={`catalog__genres-item ${genre === actualGenre ? 'catalog__genres-item--active' : ''}`}>
             <a className="catalog__genres-link"
-                  onClick={(evt) => {
-                    evt.preventDefault();
-                    setActualGenre(genre);
-                    setFilteredFilms(getFilteredFilms(films, genre));
-                  }}
+              onClick={(evt) => {
+                evt.preventDefault();
+                setActualGenre(genre);
+                setFilteredFilms(getFilteredFilms(films, genre));
+              }}
             >
               {genre}
             </a>

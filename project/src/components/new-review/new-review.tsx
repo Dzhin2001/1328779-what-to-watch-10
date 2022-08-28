@@ -2,22 +2,32 @@ import {UserReview} from '../../types/reviews';
 import {FormEvent, useState} from 'react';
 import {postNewReviewAction} from '../../store/api-actions';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {getFilm} from '../../store/film-data/selectors';
 import {getBlockedFormStatus} from '../../store/review-data/selectors';
+import {Film} from '../../types/films';
 
-function NewReview(): JSX.Element {
-  const film = useAppSelector(getFilm);
+type NewReviewProps = {
+  film: Film,
+};
+
+function NewReview({film}: NewReviewProps): JSX.Element {
   const isFormBlocked = useAppSelector(getBlockedFormStatus);
   const dispatch = useAppDispatch();
-  const reviewChangeHandle = (evt: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    const {name, value} = evt.target;
-    setNewReview({...newReview, [name]: value});
-  };
   const [newReview, setNewReview] = useState(
     {
       rating: '8',
       reviewText: '',
+      isSubmitBlocked: true,
     });
+  const getValidText = (text: string) => (text.length >= 50 && text.length <= 400);
+
+  const reviewChangeHandle = (evt: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    const {name, value} = evt.target;
+    setNewReview({
+      ...newReview,
+      [name]: value,
+      isSubmitBlocked: name === 'reviewText' ? !getValidText(value) : newReview.isSubmitBlocked
+    });
+  };
 
   const onSubmit = (review: UserReview) => {
     dispatch(postNewReviewAction(review));
@@ -58,6 +68,7 @@ function NewReview(): JSX.Element {
       });
     }
   };
+
   return (
     <div className="add-review">
       <form
@@ -96,7 +107,7 @@ function NewReview(): JSX.Element {
             <button
               className="add-review__btn"
               type="submit"
-              disabled={isFormBlocked}
+              disabled={isFormBlocked || newReview.isSubmitBlocked}
             >Post
             </button>
           </div>

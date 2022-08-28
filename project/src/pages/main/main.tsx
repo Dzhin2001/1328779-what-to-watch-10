@@ -8,9 +8,10 @@ import {useEffect} from 'react';
 import {fetchPromoAction} from '../../store/api-actions';
 import ButtonList from '../../components/button-list/button-list';
 import GenreList from '../../components/genre-list/genre-list';
-import {getPromoFilm, getInitialFilms} from '../../store/film-data/selectors';
+import {getPromoFilm, getInitialFilms, getLoadedFilmStatus} from '../../store/film-data/selectors';
 
 function Main(): JSX.Element {
+  const isDataLoaded = useAppSelector(getLoadedFilmStatus);
   const promoFilm = useAppSelector(getPromoFilm);
   const initialFilms = useAppSelector(getInitialFilms);
   const dispatch = useAppDispatch();
@@ -19,64 +20,66 @@ function Main(): JSX.Element {
     dispatch(fetchPromoAction());
   }, []);
 
-  if (promoFilm) {
+  if (isDataLoaded || !promoFilm) {
     return (
-      <>
-        <section className="film-card">
-          <div className="film-card__bg">
-            <img src={promoFilm.backgroundImage} alt={promoFilm.name}/>
-          </div>
+      <LoadingScreen />
+    );
+  }
 
-          <h1 className="visually-hidden">WTW</h1>
+  return (
+    <>
+      <section className="film-card">
+        <div className="film-card__bg">
+          <img src={promoFilm.backgroundImage} alt={promoFilm.name}/>
+        </div>
 
-          <header className="page-header film-card__head">
-            <Logo/>
-            <UserBlock/>
-          </header>
+        <h1 className="visually-hidden">WTW</h1>
 
-          <div className="film-card__wrap">
-            <div className="film-card__info">
-              <div className="film-card__poster">
-                <img src={promoFilm.posterImage} alt={promoFilm.name} width="218" height="327"/>
-              </div>
+        <header className="page-header film-card__head">
+          <Logo/>
+          <UserBlock/>
+        </header>
 
-              <div className="film-card__desc">
-                <h2 className="film-card__title">{promoFilm.name}</h2>
-                <p className="film-card__meta">
-                  <span className="film-card__genre">{promoFilm.genre}</span>
-                  <span className="film-card__year">{promoFilm.released}</span>
-                </p>
+        <div className="film-card__wrap">
+          <div className="film-card__info">
+            <div className="film-card__poster">
+              <img src={promoFilm.posterImage} alt={promoFilm.name} width="218" height="327"/>
+            </div>
 
-                <div className="film-card__buttons">
+            <div className="film-card__desc">
+              <h2 className="film-card__title">{promoFilm.name}</h2>
+              <p className="film-card__meta">
+                <span className="film-card__genre">{promoFilm.genre}</span>
+                <span className="film-card__year">{promoFilm.released}</span>
+              </p>
 
-                  <ButtonPlay />
+              <div className="film-card__buttons">
 
-                  <ButtonList />
+                <ButtonPlay idFilm={promoFilm.id} />
 
-                </div>
+                <ButtonList idFilm={promoFilm.id} />
+
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <div className="page-content">
+        <section className="catalog">
+          <h2 className="catalog__title visually-hidden">Catalog</h2>
+
+          <GenreList
+            films={initialFilms}
+          />
+
         </section>
 
-        <div className="page-content">
-          <section className="catalog">
-            <h2 className="catalog__title visually-hidden">Catalog</h2>
+        <Footer />
 
-            <GenreList
-              films={initialFilms}
-            />
-
-          </section>
-
-          <Footer />
-
-        </div>
-      </>
-    );
-  } else {
-    return <LoadingScreen />;
-  }
+      </div>
+    </>
+  );
 }
 
 export default Main;

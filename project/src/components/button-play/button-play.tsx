@@ -1,19 +1,19 @@
-import {useAppDispatch, useAppSelector} from '../../hooks';
+import {useAppDispatch} from '../../hooks';
 import {redirectToRoute} from '../../store/action';
-import {getFilm} from '../../store/film-data/selectors';
 
-function ButtonPlay(): JSX.Element {
+type ButtonPlayProps = {
+  idFilm: number,
+};
+
+function ButtonPlay({idFilm}: ButtonPlayProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const film = useAppSelector(getFilm);
 
   return (
     <button
       className="btn btn--play film-card__button"
       type="button"
       onClick={ () => {
-        if (film) {
-          dispatch(redirectToRoute(`player/${film.id}`));
-        }
+        dispatch(redirectToRoute(`player/${idFilm}`));
       }}
     >
       <svg viewBox="0 0 19 19" width="19" height="19">

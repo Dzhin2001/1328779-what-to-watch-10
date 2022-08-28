@@ -6,7 +6,6 @@ import {
   fetchFilmsAction,
   fetchPromoAction,
   fetchSimilarFilmsAction,
-  postFavoriteFilmAction,
 } from '../api-actions';
 
 const initialState: FilmData = {
@@ -62,9 +61,6 @@ export const filmData = createSlice({
       })
       .addCase(fetchPromoAction.rejected, (state) => {
         state.isDataLoaded = false;
-      })
-      .addCase(postFavoriteFilmAction.fulfilled, (state, action) => {
-        state.film = action.payload;
       });
   }
 });
