@@ -24,6 +24,5 @@ export type FilmData = {
 
 export type ReviewData = {
   reviews: Reviews,
-  isDataLoaded: boolean,
   isFormBlocked: boolean,
 };
