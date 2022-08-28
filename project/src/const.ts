@@ -30,4 +30,10 @@ const DEFAULT_FILM_COUNT = 8;
 const DEFAULT_LIKED_FILM_COUNT = 4;
 const TIMEOUT_SHOW_ERROR = 2000;
 
-export {APIRoute, AppRoute, AuthorizationStatus, DEFAULT_GENRE, DEFAULT_FILM_COUNT, DEFAULT_LIKED_FILM_COUNT, TIMEOUT_SHOW_ERROR};
+enum NameSpace {
+  Film = 'FILM',
+  Review = 'REVIEW',
+  User = 'USER',
+}
+
+export {APIRoute, AppRoute, AuthorizationStatus, NameSpace, DEFAULT_GENRE, DEFAULT_FILM_COUNT, DEFAULT_LIKED_FILM_COUNT, TIMEOUT_SHOW_ERROR};

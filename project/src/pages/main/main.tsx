@@ -1,24 +1,19 @@
-import FilmList from '../../components/film-list/film-list';
-import GenreList from '../../components/genre-list/genre-list';
 import Logo from '../../components/logo/logo';
 import UserBlock from '../../components/user-block/user-block';
 import Footer from '../../components/footer/footer';
 import LoadingScreen from '../loading-screen/loading-screen';
 import ButtonPlay from '../../components/button-play/button-play';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {DEFAULT_FILM_COUNT} from '../../const';
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import {fetchPromoAction} from '../../store/api-actions';
 import ButtonList from '../../components/button-list/button-list';
+import GenreList from '../../components/genre-list/genre-list';
+import {getPromoFilm, getInitialFilms} from '../../store/film-data/selectors';
 
 function Main(): JSX.Element {
-  const {promoFilm, filteredFilms} = useAppSelector((state) => state);
-  const getFilmsCount = (newCount: number) => (newCount < filteredFilms.length ? newCount : filteredFilms.length);
-  const [filmsCount, setFilmsCount] = useState( DEFAULT_FILM_COUNT );
+  const promoFilm = useAppSelector(getPromoFilm);
+  const initialFilms = useAppSelector(getInitialFilms);
   const dispatch = useAppDispatch();
-  const showMoreBtnClickHandle = () => {
-    setFilmsCount(getFilmsCount(filmsCount + DEFAULT_FILM_COUNT ));
-  };
 
   useEffect(() => {
     dispatch(fetchPromoAction());
@@ -68,19 +63,10 @@ function Main(): JSX.Element {
           <section className="catalog">
             <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-            <GenreList/>
-
-            <FilmList
-              films={filteredFilms}
-              filmsCount={getFilmsCount(filmsCount)}
+            <GenreList
+              films={initialFilms}
             />
 
-            {
-              filmsCount < filteredFilms.length &&
-              <div className="catalog__more">
-                <button className="catalog__button" type="button" onClick={showMoreBtnClickHandle}>Show more</button>
-              </div>
-            }
           </section>
 
           <Footer />

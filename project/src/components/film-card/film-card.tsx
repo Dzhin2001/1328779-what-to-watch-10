@@ -1,13 +1,12 @@
 import {Film} from '../../types/films';
 import {Link} from 'react-router-dom';
-import {Dispatch, useState, useRef, useEffect} from 'react';
+import {useState, useRef, useEffect} from 'react';
 
 type FilmCardProps = {
   film: Film,
-  setActiveCard: Dispatch<number>,
 };
 
-function FilmCard({film, setActiveCard}: FilmCardProps): JSX.Element {
+function FilmCard({film}: FilmCardProps): JSX.Element {
   const id = film.id;
   const [ needPlaying, setNeedPlaying] = useState(false);
   const ref = useRef<HTMLVideoElement>(null);
@@ -22,12 +21,10 @@ function FilmCard({film, setActiveCard}: FilmCardProps): JSX.Element {
   }, [needPlaying]);
 
   const mouseOverHandle = () => {
-    setActiveCard(id);
     timerId.current = setTimeout(() => (setNeedPlaying(true)),1000);
   };
 
   const mouseOutHandle = () => {
-    setActiveCard(-1);
     if (!needPlaying) {
       timerId.current && clearTimeout(timerId.current);
     }

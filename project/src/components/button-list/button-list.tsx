@@ -4,10 +4,14 @@ import {AuthorizationStatus} from '../../const';
 import {FavoriteFilm} from '../../types/films';
 import {fetchFavoriteFilmsAction, postFavoriteFilmAction} from '../../store/api-actions';
 import {useEffect} from 'react';
+import {getAuthorizationStatus, getFavoriteFilms} from '../../store/user-process/selectors';
+import {getFilm} from '../../store/film-data/selectors';
 
 function ButtonList(): JSX.Element {
   const dispatch = useAppDispatch();
-  const {film, favoriteFilms, authorizationStatus} = useAppSelector((state) => state);
+  const favoriteFilms = useAppSelector(getFavoriteFilms);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const film = useAppSelector(getFilm);
   const isFavorite = film ? film.isFavorite : false;
 
   useEffect(() => {

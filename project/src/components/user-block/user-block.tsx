@@ -2,9 +2,12 @@ import {AppRoute, AuthorizationStatus} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {Link, useNavigate} from 'react-router-dom';
 import {logoutAction} from '../../store/api-actions';
+import {memo} from 'react';
+import {getAuthorizationStatus, getUserData} from '../../store/user-process/selectors';
 
 function UserBlock(): JSX.Element {
-  const {userData, authorizationStatus} = useAppSelector((state) => state);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const userData = useAppSelector(getUserData);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -40,4 +43,4 @@ function UserBlock(): JSX.Element {
   }
 }
 
-export default UserBlock;
+export default memo(UserBlock);

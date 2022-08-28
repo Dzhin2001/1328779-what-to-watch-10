@@ -7,10 +7,11 @@ import {useAppDispatch, useAppSelector} from '../../hooks';
 import {useParams} from 'react-router-dom';
 import {useEffect} from 'react';
 import {fetchFavoriteFilmsAction} from '../../store/api-actions';
+import {getFavoriteFilms} from '../../store/user-process/selectors';
 
 
 function MyList(): JSX.Element {
-  const favoriteFilms = useAppSelector((state) => state.favoriteFilms);
+  const favoriteFilms = useAppSelector(getFavoriteFilms);
   const { id } = useParams();
   const dispatch = useAppDispatch();
 

@@ -1,9 +1,10 @@
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {redirectToRoute} from '../../store/action';
+import {getFilm} from '../../store/film-data/selectors';
 
 function ButtonPlay(): JSX.Element {
   const dispatch = useAppDispatch();
-  const {film} = useAppSelector((state) => state);
+  const film = useAppSelector(getFilm);
 
   return (
     <button

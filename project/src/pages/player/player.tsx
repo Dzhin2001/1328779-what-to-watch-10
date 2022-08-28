@@ -4,11 +4,12 @@ import {redirectToBack} from '../../store/action';
 import {useState, useRef} from 'react';
 import {useParams} from 'react-router-dom';
 import format from 'format-duration';
+import {getInitialFilms} from '../../store/film-data/selectors';
 
 function Player(): JSX.Element {
   const dispatch = useAppDispatch();
+  const films = useAppSelector(getInitialFilms);
   const { id } = useParams();
-  const films = useAppSelector((state) => state.initialFilms);
   const film = films.find((element) => element.id.toString() === id);
   const [isPlay, setIsPlay] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);

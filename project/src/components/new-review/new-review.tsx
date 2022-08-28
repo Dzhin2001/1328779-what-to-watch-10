@@ -2,9 +2,12 @@ import {UserReview} from '../../types/reviews';
 import {FormEvent, useState} from 'react';
 import {postNewReviewAction} from '../../store/api-actions';
 import {useAppDispatch, useAppSelector} from '../../hooks';
+import {getFilm} from '../../store/film-data/selectors';
+import {getBlockedFormStatus} from '../../store/review-data/selectors';
 
 function NewReview(): JSX.Element {
-  const {film, isFormBlocked} = useAppSelector((state) => state);
+  const film = useAppSelector(getFilm);
+  const isFormBlocked = useAppSelector(getBlockedFormStatus);
   const dispatch = useAppDispatch();
   const reviewChangeHandle = (evt: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     const {name, value} = evt.target;

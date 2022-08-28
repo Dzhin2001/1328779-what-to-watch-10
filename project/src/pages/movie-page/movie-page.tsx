@@ -12,9 +12,13 @@ import {fetchFilmAction, fetchSimilarFilmsAction} from '../../store/api-actions'
 import {useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import ButtonList from '../../components/button-list/button-list';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
+import {getFilm, getSimilarFilms} from '../../store/film-data/selectors';
 
 function MoviePage(): JSX.Element {
-  const {film, similarFilms, authorizationStatus} = useAppSelector((state) => state);
+  const film = useAppSelector(getFilm);
+  const similarFilms = useAppSelector(getSimilarFilms);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const { id } = useParams();
   const dispatch = useAppDispatch();
 

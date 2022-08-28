@@ -2,6 +2,7 @@ import ReviewCard from '../review-card/review-card';
 import {useEffect} from 'react';
 import {fetchReviewsAction} from '../../store/api-actions';
 import {useAppDispatch, useAppSelector} from '../../hooks';
+import {getReviews} from '../../store/review-data/selectors';
 
 type FilmReviewsProps = {
   id: string,
@@ -9,7 +10,7 @@ type FilmReviewsProps = {
 
 
 function FilmReviews({id}: FilmReviewsProps): JSX.Element {
-  const {reviews} = useAppSelector((state) => state);
+  const reviews = useAppSelector(getReviews);
   const getHalfLength = () => (Math.ceil(reviews.length / 2));
   const dispatch = useAppDispatch();
 

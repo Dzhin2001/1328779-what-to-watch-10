@@ -6,10 +6,12 @@ import {Link, useParams} from 'react-router-dom';
 import {useEffect} from 'react';
 import {fetchFilmAction} from '../../store/api-actions';
 import {useAppDispatch, useAppSelector} from '../../hooks';
+import {getInitialFilms} from '../../store/film-data/selectors';
 
 function AddReview(): JSX.Element {
-  const film = useAppSelector((state) => state.film);
+  const films = useAppSelector(getInitialFilms);
   const { id } = useParams();
+  const film = films.find((element) => element.id.toString() === id);
   const dispatch = useAppDispatch();
 
   useEffect(() => {

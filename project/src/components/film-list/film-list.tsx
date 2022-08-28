@@ -1,6 +1,5 @@
 import {Films} from '../../types/films';
 import FilmCard from '../film-card/film-card';
-import {useState} from 'react';
 
 type FilmListProps = {
   films: Films,
@@ -8,8 +7,6 @@ type FilmListProps = {
 };
 
 function FilmList({films, filmsCount}: FilmListProps): JSX.Element {
-  const [ , setActiveCard] = useState(-1);
-
   return (
     <div className="catalog__films-list">
       {
@@ -17,7 +14,6 @@ function FilmList({films, filmsCount}: FilmListProps): JSX.Element {
           <FilmCard
             key={ film.id }
             film={ film }
-            setActiveCard={ setActiveCard }
           />
         ))
       }

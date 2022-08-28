@@ -1,7 +1,7 @@
 import {DEFAULT_GENRE, AuthorizationStatus} from '../const';
 import {Films, Film, Genre} from '../types/films';
 
-const getGenres = (films: Films) => (
+const getGenres = (films: Films): Genre[] => (
   Array.from(
     new Set([
       DEFAULT_GENRE,
@@ -10,11 +10,7 @@ const getGenres = (films: Films) => (
   )
 );
 
-const getSimilarFilms = (films: Films, sampleFilm: Film) => (
-  films.filter((e) => e.genre === sampleFilm.genre)
-);
-
-const getFiltredFilms = (films: Films, genre: Genre) => {
+const getFilteredFilms = (films: Films, genre: Genre) : Films => {
   if (genre !== 'All genres') {
     return films.filter((e) => e.genre === genre);
   }
@@ -24,4 +20,4 @@ const getFiltredFilms = (films: Films, genre: Genre) => {
 const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
   authorizationStatus === AuthorizationStatus.Unknown;
 
-export {getGenres, getSimilarFilms, getFiltredFilms, isCheckedAuth};
+export {getGenres, getFilteredFilms, isCheckedAuth};
