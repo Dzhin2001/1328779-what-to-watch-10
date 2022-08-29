@@ -19,7 +19,7 @@ function ButtonAddFavorite({idFilm}: ButtonAddFavoriteProps): JSX.Element {
 
   useEffect(() => {
     setIsFavorite(findFavoriteFilmById(idFilm));
-  }, [favoriteFilms.length]);
+  }, [favoriteFilms.length, idFilm]);
 
   const onClickListBtn = (favoriteStatus: FavoriteFilm) => {
     dispatch(postFavoriteFilmAction(favoriteStatus));
