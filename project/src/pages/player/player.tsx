@@ -16,6 +16,30 @@ function Player(): JSX.Element {
   const ref = useRef<HTMLVideoElement>(null);
   const videoDuration = ref.current ? ref.current.duration : 0;
 
+  const handleVideoCanPlay = () => {
+    if (ref.current) {
+      ref.current.play();
+    }
+  };
+  const handleVideoPlay = () => setIsPlay(true);
+  const handleVideoPause = () => setIsPlay(false);
+  const handleVideoTimeUpdate = () => setCurrentTime(ref.current ? ref.current.currentTime : 0);
+  const handleBtnPlayClick = () => {
+    if (ref.current) {
+      if (isPlay) {
+        ref.current.pause();
+      } else {
+        ref.current.play();
+      }
+    }
+  };
+  const handleBtnFullScreenClick = () => {
+    if (ref.current) {
+      ref.current.requestFullscreen();
+    }
+  };
+  const handleBtnExitClick = () => dispatch(redirectToBack());
+
   if (!film) {
     return (
       <LoadingScreen />
@@ -29,21 +53,17 @@ function Player(): JSX.Element {
         src={film.videoLink}
         className="player__video"
         poster={film.previewImage}
-        onCanPlay={() => {
-          if (ref.current) {
-            ref.current.play();
-          }
-        }}
-        onPlay={() => setIsPlay(true)}
-        onPause={() => setIsPlay(false)}
-        onTimeUpdate={() => setCurrentTime(ref.current ? ref.current.currentTime : 0)}
+        onCanPlay={handleVideoCanPlay}
+        onPlay={handleVideoPlay}
+        onPause={handleVideoPause}
+        onTimeUpdate={handleVideoTimeUpdate}
       >
       </video>
 
       <button
         type="button"
         className="player__exit"
-        onClick={() => dispatch(redirectToBack())}
+        onClick={handleBtnExitClick}
       >Exit
       </button>
 
@@ -68,15 +88,7 @@ function Player(): JSX.Element {
           <button
             type="button"
             className="player__play"
-            onClick={() => {
-              if (ref.current) {
-                if (isPlay) {
-                  ref.current.pause();
-                } else {
-                  ref.current.play();
-                }
-              }
-            }}
+            onClick={handleBtnPlayClick}
           >
             <svg viewBox="0 0 19 19" width="19" height="19">
               <use xlinkHref={`${isPlay ? '#pause' : '#play-s'}`}></use>
@@ -88,11 +100,7 @@ function Player(): JSX.Element {
           <button
             type="button"
             className="player__full-screen"
-            onClick={() => {
-              if (ref.current) {
-                ref.current.requestFullscreen();
-              }
-            }}
+            onClick={handleBtnFullScreenClick}
           >
             <svg viewBox="0 0 27 27" width="27" height="27">
               <use xlinkHref="#full-screen"></use>
