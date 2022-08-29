@@ -11,7 +11,7 @@ import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchFilmAction, fetchSimilarFilmsAction} from '../../store/api-actions';
 import {useEffect} from 'react';
 import {Link} from 'react-router-dom';
-import ButtonList from '../../components/button-list/button-list';
+import ButtonAddFavorite from '../../components/button-add-favorite/button-add-favorite';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
 import {getFilm, getLoadedFilmStatus, getSimilarFilms} from '../../store/film-data/selectors';
 
@@ -63,7 +63,7 @@ function MoviePage(): JSX.Element {
 
                 <ButtonPlay idFilm={film.id} />
 
-                <ButtonList idFilm={film.id} />
+                <ButtonAddFavorite idFilm={film.id} />
 
                 {
                   authorizationStatus === AuthorizationStatus.Auth &&

@@ -6,7 +6,8 @@ import {loginAction} from '../../store/api-actions';
 import {AuthData} from '../../types/auth-data';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
 import {redirectToRoute} from '../../store/action';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {AppRoute, AuthorizationStatus, PASSWORD_REGEXP} from '../../const';
+import {toast} from 'react-toastify';
 
 function SignIn(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
@@ -28,6 +29,10 @@ function SignIn(): JSX.Element {
     evt.preventDefault();
 
     if (emailRef.current !== null && passwordRef.current !== null) {
+      if (!PASSWORD_REGEXP.exec(passwordRef.current.value)) {
+        toast.warning('Пароль должен содержать минимум одину цифру и одну букву!');
+        return;
+      }
       onSubmit({
         email: emailRef.current.value,
         password: passwordRef.current.value,

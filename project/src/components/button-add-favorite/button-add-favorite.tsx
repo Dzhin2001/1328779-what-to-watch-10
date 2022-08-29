@@ -6,11 +6,11 @@ import {useEffect, useState} from 'react';
 import {postFavoriteFilmAction} from '../../store/api-actions';
 import {getAuthorizationStatus, getFavoriteFilms} from '../../store/user-process/selectors';
 
-type ButtonListProps = {
+type ButtonAddFavoriteProps = {
   idFilm: number,
 };
 
-function ButtonList({idFilm}: ButtonListProps): JSX.Element {
+function ButtonAddFavorite({idFilm}: ButtonAddFavoriteProps): JSX.Element {
   const dispatch = useAppDispatch();
   const favoriteFilms = useAppSelector(getFavoriteFilms);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
@@ -52,4 +52,4 @@ function ButtonList({idFilm}: ButtonListProps): JSX.Element {
   );
 }
 
-export default ButtonList;
+export default ButtonAddFavorite;

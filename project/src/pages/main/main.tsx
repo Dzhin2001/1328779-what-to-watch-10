@@ -6,7 +6,7 @@ import ButtonPlay from '../../components/button-play/button-play';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {useEffect} from 'react';
 import {fetchPromoAction} from '../../store/api-actions';
-import ButtonList from '../../components/button-list/button-list';
+import ButtonAddFavorite from '../../components/button-add-favorite/button-add-favorite';
 import GenreList from '../../components/genre-list/genre-list';
 import {getPromoFilm, getInitialFilms, getLoadedFilmStatus} from '../../store/film-data/selectors';
 
@@ -57,7 +57,7 @@ function Main(): JSX.Element {
 
                 <ButtonPlay idFilm={promoFilm.id} />
 
-                <ButtonList idFilm={promoFilm.id} />
+                <ButtonAddFavorite idFilm={promoFilm.id} />
 
               </div>
             </div>
