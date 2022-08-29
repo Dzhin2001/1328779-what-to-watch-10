@@ -4,6 +4,7 @@ import {postNewReviewAction} from '../../store/api-actions';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {getBlockedFormStatus} from '../../store/review-data/selectors';
 import {Film} from '../../types/films';
+import {CommentSetting} from '../../const';
 
 type NewReviewProps = {
   film: Film,
@@ -56,8 +57,8 @@ function NewReview({film}: NewReviewProps): JSX.Element {
 
     if (newReview.reviewText !== null
       && film !== null
-      && newReview.reviewText.length >= 50
-      && newReview.reviewText.length <= 400
+      && newReview.reviewText.length >= CommentSetting.MinLength
+      && newReview.reviewText.length <= CommentSetting.MaxLength
     ) {
       onSubmit({
         idFilm: film.id,

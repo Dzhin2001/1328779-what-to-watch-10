@@ -36,6 +36,11 @@ enum NameSpace {
   User = 'USER',
 }
 
+enum CommentSetting {
+  MinLength = 50,
+  MaxLength = 400,
+}
+
 const PASSWORD_REGEXP = /(?=.*[0-9])(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]/g;
 
-export {APIRoute, AppRoute, AuthorizationStatus, NameSpace, DEFAULT_GENRE, DEFAULT_FILM_COUNT, DEFAULT_LIKED_FILM_COUNT, TIMEOUT_SHOW_ERROR, PASSWORD_REGEXP};
+export {APIRoute, AppRoute, AuthorizationStatus, NameSpace, DEFAULT_GENRE, DEFAULT_FILM_COUNT, DEFAULT_LIKED_FILM_COUNT, TIMEOUT_SHOW_ERROR, PASSWORD_REGEXP, CommentSetting};
