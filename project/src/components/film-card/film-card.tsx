@@ -20,11 +20,11 @@ function FilmCard({film}: FilmCardProps): JSX.Element {
     ref.current && ref.current.load();
   }, [needPlaying]);
 
-  const mouseOverHandle = () => {
+  const handleMouseOver = () => {
     timerId.current = setTimeout(() => (setNeedPlaying(true)),1000);
   };
 
-  const mouseOutHandle = () => {
+  const handleMouseOut = () => {
     if (!needPlaying) {
       timerId.current && clearTimeout(timerId.current);
     }
@@ -33,8 +33,8 @@ function FilmCard({film}: FilmCardProps): JSX.Element {
 
   return (
     <article className="small-film-card catalog__films-card"
-      onMouseOver = {mouseOverHandle}
-      onMouseOut = {mouseOutHandle}
+      onMouseOver = {handleMouseOver}
+      onMouseOut = {handleMouseOut}
     >
       <div className="small-film-card__image">
         <video

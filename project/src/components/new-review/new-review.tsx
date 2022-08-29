@@ -21,7 +21,7 @@ function NewReview({film}: NewReviewProps): JSX.Element {
     });
   const getValidText = (text: string) => (text.length >= 50 && text.length <= 400);
 
-  const reviewChangeHandle = (evt: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+  const handleReviewChange = (evt: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     const {name, value} = evt.target;
     setNewReview({
       ...newReview,
@@ -45,7 +45,7 @@ function NewReview({film}: NewReviewProps): JSX.Element {
         name="rating"
         value={index}
         checked={newReview.rating === index}
-        onChange={reviewChangeHandle}
+        onChange={handleReviewChange}
         disabled={isFormBlocked}
       />
       <label className="rating__label" htmlFor={`star-${index}`}>{`Rating ${index}`}</label>
@@ -101,7 +101,7 @@ function NewReview({film}: NewReviewProps): JSX.Element {
           <textarea
             className="add-review__textarea" name="reviewText" id="reviewText" placeholder="Review text"
             disabled={isFormBlocked}
-            onChange={reviewChangeHandle} value={newReview.reviewText}
+            onChange={handleReviewChange} value={newReview.reviewText}
           >
           </textarea>
           <div className="add-review__submit">
