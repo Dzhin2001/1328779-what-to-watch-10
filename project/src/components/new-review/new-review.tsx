@@ -5,6 +5,7 @@ import {useAppDispatch, useAppSelector} from '../../hooks';
 import {getBlockedFormStatus} from '../../store/review-data/selectors';
 import {Film} from '../../types/films';
 import {CommentSetting} from '../../const';
+import shortid from 'shortid';
 
 type NewReviewProps = {
   film: Film,
@@ -19,7 +20,7 @@ function NewReview({film}: NewReviewProps): JSX.Element {
       reviewText: '',
       isSubmitBlocked: true,
     });
-  const getValidText = (text: string) => (text.length >= 50 && text.length <= 400);
+  const getValidText = (text: string) => (text.length >= CommentSetting.MinLength && text.length <= CommentSetting.MaxLength);
 
   const handleReviewChange = (evt: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     const {name, value} = evt.target;
@@ -57,8 +58,7 @@ function NewReview({film}: NewReviewProps): JSX.Element {
 
     if (newReview.reviewText !== null
       && film !== null
-      && newReview.reviewText.length >= CommentSetting.MinLength
-      && newReview.reviewText.length <= CommentSetting.MaxLength
+      && getValidText(newReview.reviewText)
     ) {
       onSubmit({
         idFilm: film.id,
@@ -82,15 +82,12 @@ function NewReview({film}: NewReviewProps): JSX.Element {
 
             {
               Array.from({length: 10}).map(
-                (e, index) => {
-                  const key = (10 - index).toString();
-                  return (
-                    <StarInput
-                      key={key}
-                      index={key}
-                    />
-                  );
-                }
+                (e, index) => (
+                  <StarInput
+                    key={shortid.generate()}
+                    index={(10 - index).toString()}
+                  />
+                )
               )
             }
 

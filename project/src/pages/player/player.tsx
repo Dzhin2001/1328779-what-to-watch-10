@@ -1,14 +1,16 @@
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import LoadingScreen from '../loading-screen/loading-screen';
+import NotFoundScreen from '../../components/not-found-screen/not-found-screen';
 import {redirectToBack} from '../../store/action';
 import {useState, useRef} from 'react';
 import {useParams} from 'react-router-dom';
 import format from 'format-duration';
-import {getInitialFilms} from '../../store/film-data/selectors';
+import {getInitialFilms, getLoadedFilmStatus} from '../../store/film-data/selectors';
 
 function Player(): JSX.Element {
   const dispatch = useAppDispatch();
   const films = useAppSelector(getInitialFilms);
+  const isLoading = useAppSelector(getLoadedFilmStatus);
   const { id } = useParams();
   const film = films.find((element) => element.id.toString() === id);
   const [isPlay, setIsPlay] = useState(false);
@@ -40,9 +42,14 @@ function Player(): JSX.Element {
   };
   const handleBtnExitClick = () => dispatch(redirectToBack());
 
-  if (!film) {
+  if (isLoading) {
     return (
       <LoadingScreen />
+    );
+  }
+  if (!film) {
+    return (
+      <NotFoundScreen />
     );
   }
 
