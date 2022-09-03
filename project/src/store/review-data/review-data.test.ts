@@ -3,7 +3,7 @@ import {fetchReviewsAction, postNewReviewAction } from '../api-actions';
 import {makeFakeReviews, makeFakeNewReview} from '../../utils/mocks';
 import {ReviewData} from '../../types/state';
 
-const mockReviews = makeFakeReviews();
+const mockReviews = makeFakeReviews(20);
 const mockNewReview = makeFakeNewReview();
 
 describe('Reducer: reviewsData', () => {

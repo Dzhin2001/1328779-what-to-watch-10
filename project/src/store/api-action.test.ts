@@ -54,7 +54,7 @@ describe('Async actions', () => {
   });
 
   it('should dispatch fetchFilmAction before every route', async () => {
-    const mockFilm = makeFakeFilm();
+    const mockFilm = makeFakeFilm(0);
     mockAPI
       .onGet(`${APIRoute.Films}/${mockFilm.id.toString()}`)
       .reply(200, mockFilm);
@@ -72,7 +72,7 @@ describe('Async actions', () => {
   });
 
   it('should dispatch fetchSimilarFilmsAction before every route', async () => {
-    const mockFilm = makeFakeFilm();
+    const mockFilm = makeFakeFilm(0);
     mockAPI
       .onGet(`${APIRoute.Films}/${mockFilm.id.toString()}/similar`)
       .reply(200, [mockFilm]);
@@ -90,7 +90,7 @@ describe('Async actions', () => {
   });
 
   it('should dispatch fetchPromoAction after route /', async () => {
-    const mockFilm = makeFakeFilm();
+    const mockFilm = makeFakeFilm(0);
     mockAPI
       .onGet(APIRoute.Promo)
       .reply(200, mockFilm);
@@ -108,7 +108,7 @@ describe('Async actions', () => {
   });
 
   it('should dispatch fetchReviewsAction after route review comments', async () => {
-    const mockFilm = makeFakeFilm();
+    const mockFilm = makeFakeFilm(0);
     const mockReviews = makeFakeReviews(12);
     mockAPI
       .onGet(`${APIRoute.Comments}/${mockFilm.id.toString()}`)
@@ -127,7 +127,7 @@ describe('Async actions', () => {
   });
 
   it('should dispatch postNewReviewAction after add new comment', async () => {
-    const mockFilm = makeFakeFilm();
+    const mockFilm = makeFakeFilm(0);
     const mockNewComment = makeNewComment(mockFilm.id);
     mockAPI
       .onPost(`${APIRoute.Comments}/${mockFilm.id.toString()}`)
@@ -147,7 +147,7 @@ describe('Async actions', () => {
   });
 
   it('should dispatch postFavoriteFilmAction after add new favorite film', async () => {
-    const mockFavoriteFilm = {...makeFakeFilm(), isFavorite: true} as Film;
+    const mockFavoriteFilm = {...makeFakeFilm(0), isFavorite: true} as Film;
     const favoriteFilmInclude = {id: mockFavoriteFilm.id, status: 1} as FavoriteFilm;
     mockAPI
       .onPost(`${APIRoute.Favorite}/${mockFavoriteFilm.id}/1`)
@@ -166,7 +166,7 @@ describe('Async actions', () => {
   });
 
   it('should dispatch postFavoriteFilmAction after delete one favorite film', async () => {
-    const mockNotFavoriteFilm = {...makeFakeFilm(), isFavorite: false} as Film;
+    const mockNotFavoriteFilm = {...makeFakeFilm(0), isFavorite: false} as Film;
     const favoriteFilmExclude = {id: mockNotFavoriteFilm.id, status: 0} as FavoriteFilm;
     mockAPI
       .onPost(`${APIRoute.Favorite}/${mockNotFavoriteFilm.id}/0`)

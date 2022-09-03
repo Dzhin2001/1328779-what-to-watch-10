@@ -9,7 +9,7 @@ import {State} from '../../types/state';
 import {AnyAction} from 'redux';
 import {createAPI} from '../../services/api';
 import thunk from 'redux-thunk';
-import Main from './main';
+import MyList from './my-list';
 
 const TEST_FILM_COUNT = 11;
 const mockFilms = makeFakeInitialFilms(TEST_FILM_COUNT);
@@ -18,14 +18,7 @@ const initialState = {
   [NameSpace.User]: {
     authorizationStatus: AuthorizationStatus.Auth,
     userData: null,
-    favoriteFilms: [],
-  },
-  [NameSpace.Film]: {
-    initialFilms: mockFilms,
-    promoFilm: mockFilms[0],
-    film: mockFilms[0],
-    similarFilms: mockFilms,
-    isDataLoaded: false,
+    favoriteFilms: mockFilms,
   },
 };
 
@@ -34,7 +27,7 @@ const middlewares = [thunk.withExtraArgument(api)];
 const mockStore = configureMockStore<State, AnyAction>(middlewares);
 const store = mockStore(initialState);
 
-describe('Component: Main', () => {
+describe('Component: MyList', () => {
 
   beforeAll(() => {
     window.HTMLMediaElement.prototype.play = jest.fn();
@@ -44,16 +37,17 @@ describe('Component: Main', () => {
 
   it('should render correctly', async () => {
     const history = createMemoryHistory();
+    history.push('/mylist');
 
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
-          <Main />
+          <MyList />
         </HistoryRouter>
       </Provider>
     );
-
-    expect(screen.getByText('WTW')).toBeInTheDocument();
+    expect(screen.getByText('My list')).toBeInTheDocument();
+    expect(screen.getByText(mockFilms.length)).toBeInTheDocument();
     expect(screen.getByText('Catalog')).toBeInTheDocument();
   });
 });

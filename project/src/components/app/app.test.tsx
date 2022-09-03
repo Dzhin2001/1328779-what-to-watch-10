@@ -1,31 +1,35 @@
 import {render, screen} from '@testing-library/react';
 import {createMemoryHistory} from 'history';
-import HistoryRouter from '../../components/history-route/history-route';
 import {Provider} from 'react-redux';
-import {makeFakeInitialFilms} from '../../utils/mocks';
-import {AuthorizationStatus, NameSpace} from '../../const';
 import {configureMockStore} from '@jedmao/redux-mock-store';
-import {State} from '../../types/state';
-import {AnyAction} from 'redux';
+import {AuthorizationStatus, AppRoute, NameSpace} from '../../const';
+import App from './app';
+import {makeFakeInitialFilms} from '../../utils/mocks';
 import {createAPI} from '../../services/api';
 import thunk from 'redux-thunk';
-import Main from './main';
+import {State} from '../../types/state';
+import {AnyAction} from 'redux';
 
 const TEST_FILM_COUNT = 11;
 const mockFilms = makeFakeInitialFilms(TEST_FILM_COUNT);
+const mockFilm = mockFilms[0];
 
 const initialState = {
   [NameSpace.User]: {
-    authorizationStatus: AuthorizationStatus.Auth,
+    authorizationStatus: AuthorizationStatus.NoAuth,
     userData: null,
     favoriteFilms: [],
   },
   [NameSpace.Film]: {
     initialFilms: mockFilms,
-    promoFilm: mockFilms[0],
-    film: mockFilms[0],
-    similarFilms: mockFilms,
+    promoFilm: mockFilm,
+    film: mockFilm,
+    similarFilms: [],
     isDataLoaded: false,
+  },
+  [NameSpace.Review]: {
+    reviews: [],
+    isFormBlocked: false,
   },
 };
 
@@ -33,8 +37,15 @@ const api = createAPI();
 const middlewares = [thunk.withExtraArgument(api)];
 const mockStore = configureMockStore<State, AnyAction>(middlewares);
 const store = mockStore(initialState);
+const history = createMemoryHistory();
 
-describe('Component: Main', () => {
+const fakeApp = (
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
+
+describe('Application Routing', () => {
 
   beforeAll(() => {
     window.HTMLMediaElement.prototype.play = jest.fn();
@@ -42,18 +53,19 @@ describe('Component: Main', () => {
     window.HTMLMediaElement.prototype.load = jest.fn();
   });
 
-  it('should render correctly', async () => {
-    const history = createMemoryHistory();
+  it('should render "WelcomeScreen" when user navigate to "/"', () => {
+    history.push(AppRoute.Main);
 
-    render(
-      <Provider store={store}>
-        <HistoryRouter history={history}>
-          <Main />
-        </HistoryRouter>
-      </Provider>
-    );
+    render(fakeApp);
 
     expect(screen.getByText('WTW')).toBeInTheDocument();
-    expect(screen.getByText('Catalog')).toBeInTheDocument();
+
+  });
+
+  it('should render "AuthScreen" when user navigate to "/login"', () => {
+    history.push(AppRoute.SignIn);
+
+    render(fakeApp);
+
   });
 });

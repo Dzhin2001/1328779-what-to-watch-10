@@ -31,8 +31,8 @@ export const makeFakeUserData = (): UserData => ({
   token: faker.datatype.uuid(),
 } as UserData);
 
-export const makeFakeFilm = (idFilm?: number | undefined): Film => ({
-  id: idFilm ? idFilm : faker.datatype.number(100),
+export const makeFakeFilm = (idFilm: number): Film => ({
+  id: idFilm,
   name: faker.name.title(),
   posterImage: faker.image.image(),
   previewImage: faker.image.image(),

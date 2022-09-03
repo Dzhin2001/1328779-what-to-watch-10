@@ -7,9 +7,15 @@ import {AuthorizationStatus, NameSpace} from '../../const';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import {State} from '../../types/state';
 import {AnyAction} from 'redux';
+import Router from 'react-router-dom';
 import {createAPI} from '../../services/api';
 import thunk from 'redux-thunk';
-import Main from './main';
+import Player from './player';
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useParams: jest.fn(),
+}));
 
 const TEST_FILM_COUNT = 11;
 const mockFilms = makeFakeInitialFilms(TEST_FILM_COUNT);
@@ -34,7 +40,8 @@ const middlewares = [thunk.withExtraArgument(api)];
 const mockStore = configureMockStore<State, AnyAction>(middlewares);
 const store = mockStore(initialState);
 
-describe('Component: Main', () => {
+describe('Component: Player', () => {
+  const mockFilm = mockFilms[0];
 
   beforeAll(() => {
     window.HTMLMediaElement.prototype.play = jest.fn();
@@ -44,16 +51,22 @@ describe('Component: Main', () => {
 
   it('should render correctly', async () => {
     const history = createMemoryHistory();
+    history.push(`/films/${mockFilm.id}/player`);
+
+    jest.spyOn(Router, 'useParams').mockReturnValue({ id: mockFilm.id.toString() });
 
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
-          <Main />
+          <Player />
         </HistoryRouter>
       </Provider>
     );
 
-    expect(screen.getByText('WTW')).toBeInTheDocument();
-    expect(screen.getByText('Catalog')).toBeInTheDocument();
+    expect(screen.getByText(mockFilm.name)).toBeInTheDocument();
+    expect(screen.getByText('Exit')).toBeInTheDocument();
+    expect(screen.getByText('Toggler')).toBeInTheDocument();
+    expect(screen.getByText('Play')).toBeInTheDocument();
+    expect(screen.getByText('Full screen')).toBeInTheDocument();
   });
 });

@@ -11,7 +11,7 @@ import {
 import {makeFakeUserData, makeFakeFilm} from '../../utils/mocks';
 
 const mockUserData = makeFakeUserData();
-const mockFilm = makeFakeFilm();
+const mockFilm = makeFakeFilm(0);
 
 describe('Reducer: userProcess', () => {
   let state: UserProcess;

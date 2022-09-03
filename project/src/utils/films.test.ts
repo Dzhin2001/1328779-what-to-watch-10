@@ -2,7 +2,7 @@ import {isCheckedAuth, getGenres, getFilteredFilms} from './films';
 import {makeFakeFilm, makeFakeInitialFilms} from './mocks';
 import {AuthorizationStatus, DEFAULT_GENRE} from '../const';
 
-const mockFilm = makeFakeFilm();
+const mockFilm = makeFakeFilm(0);
 const mockFilms = makeFakeInitialFilms(9);
 
 describe('Function: isCheckedAuth', () => {

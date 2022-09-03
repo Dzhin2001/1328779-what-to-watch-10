@@ -3,22 +3,18 @@ import FilmList from '../../components/film-list/film-list';
 import UserBlock from '../../components/user-block/user-block';
 import Footer from '../../components/footer/footer';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {useParams} from 'react-router-dom';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {fetchFavoriteFilmsAction} from '../../store/api-actions';
 import {getFavoriteFilms} from '../../store/user-process/selectors';
 
 
 function MyList(): JSX.Element {
   const favoriteFilms = useAppSelector(getFavoriteFilms);
-  const { id } = useParams();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (id) {
       dispatch(fetchFavoriteFilmsAction());
-    }
-  }, [id]);
+  }, []);
 
   return (
     <div className="user-page">

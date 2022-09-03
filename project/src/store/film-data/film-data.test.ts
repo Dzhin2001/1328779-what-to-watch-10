@@ -3,7 +3,7 @@ import {fetchFilmsAction, fetchFilmAction, fetchSimilarFilmsAction, fetchPromoAc
 import {makeFakeFilm, makeFakeInitialFilms} from '../../utils/mocks';
 import {FilmData} from '../../types/state';
 
-const mockFilm = makeFakeFilm();
+const mockFilm = makeFakeFilm(0);
 const mockInitialFilms = makeFakeInitialFilms(9);
 
 describe('Reducer: filmData', () => {
