@@ -11,7 +11,7 @@ import thunk from 'redux-thunk';
 import UserBlock from './user-block';
 import {makeFakeUserData} from '../../utils/mocks';
 
-const fackeUserData = makeFakeUserData();
+const fakeUserData = makeFakeUserData();
 
 const api = createAPI();
 const middlewares = [thunk.withExtraArgument(api)];
@@ -23,7 +23,7 @@ describe('Component: UserBlock', () => {
     const initialState = {
       [NameSpace.User]: {
         authorizationStatus: AuthorizationStatus.Auth,
-        userData: fackeUserData,
+        userData: fakeUserData,
         favoriteFilms: [],
       },
     };

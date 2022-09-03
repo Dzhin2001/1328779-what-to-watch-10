@@ -4,7 +4,7 @@ import {UserData} from '../types/user-data';
 import {Actors, Genre, Rating, Film, Films} from '../types/films';
 
 export const makeFakeReviews = (reviewCount: number): Reviews => (
-  new Array(reviewCount).map((element, index) => ({
+  Array.from({length: reviewCount}, (element, index) => ({
     comment: faker.random.words(5) as Comment,
     date: faker.date.between('2020-01-01T00:00:00.000Z', '2030-01-01T00:00:00.000Z').toISOString() ,
     id: index,
