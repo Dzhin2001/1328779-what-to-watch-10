@@ -29,7 +29,7 @@ describe('Component: SignIn', () => {
 
   it('should render correctly', async () => {
     const history = createMemoryHistory();
-    history.push(`/login}`);
+    history.push('/login');
 
     render(
       <Provider store={store}>

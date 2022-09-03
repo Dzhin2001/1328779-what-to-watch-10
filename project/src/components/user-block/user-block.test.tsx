@@ -30,7 +30,7 @@ describe('Component: UserBlock', () => {
 
     const store = mockStore(initialState);
     const history = createMemoryHistory();
-    history.push(`/login}`);
+    history.push('/login');
 
     render(
       <Provider store={store}>
@@ -54,7 +54,7 @@ describe('Component: UserBlock', () => {
 
     const store = mockStore(initialState);
     const history = createMemoryHistory();
-    history.push(`/login}`);
+    history.push('/login');
 
     render(
       <Provider store={store}>

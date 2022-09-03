@@ -3,7 +3,7 @@ import FilmList from '../../components/film-list/film-list';
 import UserBlock from '../../components/user-block/user-block';
 import Footer from '../../components/footer/footer';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import {fetchFavoriteFilmsAction} from '../../store/api-actions';
 import {getFavoriteFilms} from '../../store/user-process/selectors';
 
@@ -13,7 +13,7 @@ function MyList(): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-      dispatch(fetchFavoriteFilmsAction());
+    dispatch(fetchFavoriteFilmsAction());
   }, []);
 
   return (
