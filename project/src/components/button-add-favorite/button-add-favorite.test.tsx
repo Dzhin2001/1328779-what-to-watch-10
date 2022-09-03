@@ -8,18 +8,25 @@ import {AuthorizationStatus, NameSpace} from '../../const';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import {State} from '../../types/state';
 import {AnyAction} from 'redux';
+import {createAPI} from '../../services/api';
+import thunk from 'redux-thunk';
+import {makeFakeUserData} from '../../utils/mocks';
 
 const TEST_FILM_COUNT = 11;
 const mockFilms = makeFakeInitialFilms(TEST_FILM_COUNT);
+const mockUserData = makeFakeUserData();
 
 const initialState = {
   [NameSpace.User]: {
     authorizationStatus: AuthorizationStatus.Auth,
-    userData: null,
+    userData: mockUserData,
     favoriteFilms: mockFilms,
   },
 };
-const mockStore = configureMockStore<State, AnyAction>();
+
+const api = createAPI();
+const middlewares = [thunk.withExtraArgument(api)];
+const mockStore = configureMockStore<State, AnyAction>(middlewares);
 const store = mockStore(initialState);
 
 describe('Component: ButtonAddFavorite', () => {
@@ -36,7 +43,7 @@ describe('Component: ButtonAddFavorite', () => {
     );
 
     const textElement = screen.getByText('My list');
-    const lengthElement = screen.getByText(TEST_FILM_COUNT);
+    const lengthElement = screen.getByText(TEST_FILM_COUNT.toString());
 
     expect(textElement).toBeInTheDocument();
     expect(lengthElement).toBeInTheDocument();

@@ -42,6 +42,7 @@ function NewReview({film}: NewReviewProps): JSX.Element {
       <input
         className="rating__input"
         id={`star-${index}`}
+        data-testid={`star-${index}`}
         type="radio"
         name="rating"
         value={index}
@@ -96,7 +97,11 @@ function NewReview({film}: NewReviewProps): JSX.Element {
 
         <div className="add-review__text">
           <textarea
-            className="add-review__textarea" name="reviewText" id="reviewText" placeholder="Review text"
+            className="add-review__textarea"
+            name="reviewText"
+            id="reviewText"
+            data-testid="reviewText"
+            placeholder="Review text"
             disabled={isFormBlocked}
             onChange={handleReviewChange} value={newReview.reviewText}
           >

@@ -50,11 +50,11 @@ export const userProcess = createSlice({
       })
       .addCase(postFavoriteFilmAction.fulfilled, (state, action) => {
         const film = action.payload;
-        if (film.isFavorite) {
-          state.favoriteFilms = state.favoriteFilms.filter( (element) => element.id !== film.id);
-        } else
+        if (film.isFavorite)
         {
           state.favoriteFilms.push(film);
+        } else {
+          state.favoriteFilms = state.favoriteFilms.filter( (element) => element.id !== film.id);
         }
       });
   }

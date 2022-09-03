@@ -30,10 +30,9 @@ function ButtonAddFavorite({idFilm}: ButtonAddFavoriteProps): JSX.Element {
       dispatch(redirectToRoute(AppRoute.SignIn));
       return;
     }
-    setIsFavorite(!isFavorite);
     onClickListBtn({
       id: idFilm,
-      status: isFavorite ? 1 : 0,
+      status: isFavorite ? 0 : 1,
     });
   };
 

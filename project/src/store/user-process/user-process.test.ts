@@ -89,17 +89,17 @@ describe('Reducer: userProcess', () => {
 
     it('should delete exists favorite film', () => {
       expect(userProcess.reducer(
-        {...state, favoriteFilms: [mockFilmIsFavoriteTrue] },
-        {type: postFavoriteFilmAction.fulfilled.type, payload: mockFilmIsFavoriteTrue }
+        {...state, favoriteFilms: [mockFilmIsFavoriteFalse] },
+        {type: postFavoriteFilmAction.fulfilled.type, payload: mockFilmIsFavoriteFalse }
       ))
         .toEqual({...state, favoriteFilms: [],});
     });
     it('should add film to favorite list', () => {
       expect(userProcess.reducer(state, {
         type: postFavoriteFilmAction.fulfilled.type,
-        payload: mockFilmIsFavoriteFalse
+        payload: mockFilmIsFavoriteTrue
       }))
-        .toEqual({...state, favoriteFilms: [mockFilmIsFavoriteFalse] });
+        .toEqual({...state, favoriteFilms: [mockFilmIsFavoriteTrue] });
     });
   });
 });

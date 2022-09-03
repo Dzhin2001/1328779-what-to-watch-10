@@ -53,7 +53,7 @@ describe('Application Routing', () => {
     window.HTMLMediaElement.prototype.load = jest.fn();
   });
 
-  it('should render "WelcomeScreen" when user navigate to "/"', () => {
+  it('should render "Main screen" when user navigate to "/"', () => {
     history.push(AppRoute.Main);
 
     render(fakeApp);
@@ -67,5 +67,8 @@ describe('Application Routing', () => {
 
     render(fakeApp);
 
+    expect(screen.getByText('WTW')).toBeInTheDocument();
+
   });
+
 });
